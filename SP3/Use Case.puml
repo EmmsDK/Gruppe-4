@@ -1,0 +1,21 @@
+@startuml
+
+left to right direction
+skinparam packageStyle rectangle
+
+actor Teams
+actor Admin
+
+rectangle School {
+    Teams -- (Add Players)
+    (Register Teams) <- (Add Players)
+    Teams -- (Register Teams)
+    (Register Teams) --> (Deadline)
+    (Deadline) --> (Generate Gameplan)
+    (Review Gameplan) <- (Generate Gameplan)
+    (Results) -> (Generate Gameplan)
+    (Results) -- Admin
+    (Review Gameplan) -- Admin
+}
+
+@enduml

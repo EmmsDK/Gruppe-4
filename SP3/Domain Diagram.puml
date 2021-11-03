@@ -1,0 +1,11 @@
+@startuml
+(Main)<|-- (Admin)
+(Admin) <|-- (Team)
+(Admin) <|-- (Date)
+(Admin) <|-- (Knockout)
+(Admin) <|-- (Brackets)
+(Team) <|-- (Player)
+(Brackets) <|-- (Team)
+(Date) <|-- (Team)
+(Knockout) <|-- (Team)
+@enduml
