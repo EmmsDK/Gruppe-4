@@ -1,32 +1,36 @@
 @startuml
 class Main{}
 
+Main *-- UI
+
+class UI{
+    + String userInput(Scanner msg)
+    - Scanner writeToFile()
+}
+
+UI *-- Player
+UI *-- Team
+UI *-- Admin
 class Player{
-    - Scanner playerInput;
     - String playerName;
     - ArrayList<String> teamPlayers;
-
-    + String setPlayerName(Scanner input)
 }
 
 class Team{
     - String teamName;
-    - Scanner teamInput;
-    - Scanner writeToFile;
+    - ArrayList<Team> players;
     - Boolean haveLost = false;
     - int gamesWon = 0;
-    - int teamID;
     - int teamPoints;
-    + int setGamesWon(int won)
-    + Boolean setHaveLost(Boolean lost)
-    + int setTeamPoints(int teamPoints)
 }
 
 class Admin{
-    - Scanner writeToFile;
     - Scanner readFromFile;
     - String deadline;
     + String setDeadline()
+    + int setGamesWon(int won)
+    + Boolean setHaveLost(Boolean lost)
+    + int setTeamPoints(int teamPoints)
 }
 
 class Date{
@@ -38,30 +42,46 @@ class Date{
 }
 
 class Knockout{
-    - ArrayList<Team> teams;
     - Scanner setGameDate;
     - void sortTeams(ArrayList<Team> _teams)
     + void setGameDate(ArrayList<Team> _teams, Scanner input)
     + void printGamePlan(ArrayList<Team> _teams)
 }
 
-class Brackets{
-    - ArrayList<ArrayList> bracket = new ArrayList<>();
+class GroupStage{
+    - ArrayList<ArrayList> bracket = new ArrayList<>()
     - ArrayList<Team> teamPlacement = new ArrayList<>()
 }
 
-Main <-- Admin
-Main <-- Player
+Interface Tournament{
+    - ArrayList<ArrayList> matches
+    + void setGameDate(ArrayList<Team> _teams), Scanner input)
+    + void printGamePlan(ArrayList<Team> _teams)
+    + void makeTournament()
+}
+
+Abstract Matches{
+    - ArrayList<Team> match
+    - Team teamWon()
+}
+
+
 
 Team <-- Player
+Team <-- Matches
 
 Admin <-- Knockout
-Admin <-- Brackets
+Admin <-- GroupStage
 Admin <-- Date
 Admin <-- Team
 
+Matches *-- GroupStage
+Matches *-- Knockout
+
+Tournament *-- Knockout
+Tournament *-- GroupStage
 Knockout <-- Date
-Brackets <-- Date
+GroupStage <-- Date
 
 
 @enduml
