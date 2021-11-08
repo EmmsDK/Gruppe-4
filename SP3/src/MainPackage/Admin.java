@@ -14,7 +14,7 @@ public class Admin {
     }
 
     //private ArrayList<String> testString;
-    private ArrayList<TestTeam> teams;
+    private ArrayList<Team> teams;
     private String deadline; // Make it a Date (class) or make a Dates class to pass it to
     private ArrayList<String> dates; // Likewise as above
     /* Is written on the first line of the .txt file and is used to be able to read at which line

@@ -10,11 +10,12 @@ public class Team {
     private int teamPoints;
 
 
-    public Team(String _teamName, boolean _haveLost, int _gameWon, int _teamPoints) {
+    public Team(String _teamName, ArrayList<String> teamPlayers) {
         this.teamName = _teamName;
-        this.haveLost = _haveLost;
-        this.gameWon = _gameWon;
-        this.teamPoints = _teamPoints;
+        this.teamPlayers = teamPlayers;
+       // this.haveLost = _haveLost;
+       // this.gameWon = _gameWon;
+      // this.teamPoints = _teamPoints;
     }
 
     public String getTeamName() {

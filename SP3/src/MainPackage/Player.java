@@ -1,17 +1,27 @@
+import MainPackage.Admin;
+import MainPackage.Team;
+
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Player {
+    Admin admin = new Admin();
+
     ArrayList<String> playerNamesArray = new ArrayList<>();
-    ArrayList<String> teamsArray = new ArrayList<>();
+    String teamNames = "";
+    boolean start = true;
     Scanner sc = new Scanner(System.in);
 
+    public Player() throws FileNotFoundException {      // Hvis der ikke er en fil, så skal der kastes en exception.
+
+    }
 
     public void inputFromPlayers() {
         System.out.println(" *VELKOMMEN TIL ÅRETS SKOLE BORDFODBOLDTURNERING!* ");
 
-        while (teamsArray.size() < 16) {      // Scanner skal lukkes efter 16 hold er skrevet ind.
+        while (start) {     // Mens start er true - skal den blive ved med at køre.
             System.out.println("Indtast første spillers navn:");
             playerNamesArray.add(sc.next());
             System.out.println("Indtast andens spillers navn:");
@@ -24,18 +34,23 @@ public class Player {
 
             }
             System.out.println("Indtast et holdnavn:");
-            teamsArray.add(sc.next());
+            teamNames = sc.next();
             System.out.println("Jeres hold er nu oprettet. ");
+            start = false;
+            displayList(playerNamesArray, teamNames);
 
-            displayList(teamsArray);
+            Team teams = new Team(teamNames, playerNamesArray);     // Vi instantierer her fra Team class.
+                admin.addTeam(teams);       // Sender teams input videre til Admin class.
+
         }
-        sc.close();     // Closer scanneren ude af while loop scopet.
     }
 
-    public void displayList(ArrayList teamsArray) {     // Metode der viser de tilføjede holdnavne.
-        for (int i = 0; i < teamsArray.size(); i++) {
-            System.out.println(teamsArray.get(i));
+    public void displayList(ArrayList teamsArray, String teamDesc) {     // Metode der viser de tilføjede holdnavne.
+        System.out.print(teamDesc + ": ");
+        for (int i = 0; i < teamsArray.size() - 1; i++) {   // -1 for at stoppe ved den anden siste ','.
+            System.out.print(teamsArray.get(i) + ", ");
         }
+        System.out.println(teamsArray.get(teamsArray.size()-1));    // for at få det sidste element i arrayet.
     }
 
     public int playerChoiceInt() {        // Exception metode
