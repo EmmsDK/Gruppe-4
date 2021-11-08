@@ -83,7 +83,7 @@ public class Admin {
                 playerNames.add(element[f]);
             }
             Team team = new Team(element[0], playerNames);
-            team.setHasLost(Boolean.parseBoolean(element[element.length-1]));
+            team.setHaveLost(Boolean.parseBoolean(element[element.length-1]));
             tmpList.add(team);
         }
         setTeamsList(tmpList);
@@ -157,7 +157,7 @@ public class Admin {
     public void changeTeam(Boolean bob, int i) throws IOException {
         ArrayList<Team> _teamList = getTeams();
         Team _team = _teamList.get(i-1);
-        _team.setHasLost(bob);
+        _team.setHaveLost(bob);
         _teamList.set(i-1, _team);
         changeTeamsList(_teamList);
     }
@@ -174,7 +174,7 @@ public class Admin {
         // Add how team members are added (from player class)
         ArrayList<Team> _teamList = getTeams();
         Team _team = _teamList.get(i-1);
-        _team.setTeamMembers(_teamMembers);
+        _team.setTeamPlayers(_teamMembers);
         _teamList.set(i-1, _team);
         changeTeamsList(_teamList);
     }
