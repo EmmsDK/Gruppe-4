@@ -4,6 +4,7 @@ import MainPackage.Admin;
 import MainPackage.Team;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -20,7 +21,7 @@ public class Player {
 
     }
 
-    public void inputFromPlayers() {
+    public void inputFromPlayers() throws IOException {
         System.out.println(" *VELKOMMEN TIL ÅRETS SKOLE BORDFODBOLDTURNERING!* ");
 
         while (start) {     // Mens start er true - skal den blive ved med at køre.

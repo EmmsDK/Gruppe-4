@@ -54,21 +54,21 @@ public class Admin {
         writeToFile("teams.txt");
     }
 
-    public ArrayList<TestTeam> getTeams() {
+    public ArrayList<Team> getTeams() {
         return teams;
     }
 
     /* When the program runs, this is the first function that is called (under readFromFile), that sets the Team list
        with the teams from the teams.txt file */
     // Maybe place in UI
-    public void setTeamsList(ArrayList<TestTeam> _teams) {
+    public void setTeamsList(ArrayList<Team> _teams) {
         this.teams = _teams;
     }
 
     // Maybe also have in UI
     void readFromFile(String file) throws FileNotFoundException {
         Scanner fileReader = new Scanner(new File(file));
-        ArrayList<TestTeam> tmpList = new ArrayList<>();
+        ArrayList<Team> tmpList = new ArrayList<>();
         ArrayList<String[]> txtList = new ArrayList<>();
         while (fileReader.hasNextLine()){
             String line = fileReader.nextLine();
@@ -82,7 +82,7 @@ public class Admin {
             for(int f = 1; f < element.length-1; f++){
                 playerNames.add(element[f]);
             }
-            TestTeam team = new TestTeam(element[0], playerNames);
+            Team team = new Team(element[0], playerNames);
             team.setHasLost(Boolean.parseBoolean(element[element.length-1]));
             tmpList.add(team);
         }
@@ -109,7 +109,7 @@ public class Admin {
             //for (TestTeam t : tmpTeam) {
             writer.write(getTeams().size()+"\n");
             // If TestTeam != null?
-            for (TestTeam t : getTeams()){
+            for (Team t : getTeams()){
                 //(int i = 0; i < tmpTeam.size(); i++){
                 writer.write(t.toString()+"\n");
             }
@@ -130,7 +130,7 @@ public class Admin {
     }
 
     // Adding and removing a team
-    public void addTeam(TestTeam _teams) throws IOException {
+    public void addTeam(Team _teams) throws IOException {
         this.teams.add(_teams);
         writeToFile("teams.txt");
     }
@@ -155,16 +155,16 @@ public class Admin {
     /* Below are all the functions for making smaller changes to the individual teams, such as Team name, Team member,
        whether they have lost and upcoming is each teams points and wins (amount) */
     public void changeTeam(Boolean bob, int i) throws IOException {
-        ArrayList<TestTeam> _teamList = getTeams();
-        TestTeam _team = _teamList.get(i-1);
+        ArrayList<Team> _teamList = getTeams();
+        Team _team = _teamList.get(i-1);
         _team.setHasLost(bob);
         _teamList.set(i-1, _team);
         changeTeamsList(_teamList);
     }
 
     public void changeTeam(String _teamName, int i) throws IOException {
-        ArrayList<TestTeam> _teamList = getTeams();
-        TestTeam _team = _teamList.get(i-1);
+        ArrayList<Team> _teamList = getTeams();
+        Team _team = _teamList.get(i-1);
         _team.setTeamName(_teamName);
         _teamList.set(i-1, _team);
         changeTeamsList(_teamList);
@@ -172,8 +172,8 @@ public class Admin {
 
     public void changeTeam(ArrayList<String> _teamMembers, int i) throws IOException {
         // Add how team members are added (from player class)
-        ArrayList<TestTeam> _teamList = getTeams();
-        TestTeam _team = _teamList.get(i-1);
+        ArrayList<Team> _teamList = getTeams();
+        Team _team = _teamList.get(i-1);
         _team.setTeamMembers(_teamMembers);
         _teamList.set(i-1, _team);
         changeTeamsList(_teamList);
@@ -182,7 +182,7 @@ public class Admin {
     // Make a changeTeam for score and wins, when necessary
 
     // This function is called, if a smaller change is made to one of the already existing teams in the list
-    public void changeTeamsList(ArrayList<TestTeam> _teams) throws IOException {
+    public void changeTeamsList(ArrayList<Team> _teams) throws IOException {
         this.teams = _teams;
         writeToFile("teams.txt");
     }
