@@ -11,10 +11,9 @@ import java.util.Scanner;
 
 public class Player {
     Admin admin = new Admin();
-
     ArrayList<String> playerNamesArray = new ArrayList<>();
     String teamNames = "";
-    boolean start = true;
+    boolean input = true;
     Scanner sc = new Scanner(System.in);
 
     public Player() throws FileNotFoundException {      // Hvis der ikke er en fil, så skal der kastes en exception.
@@ -24,7 +23,7 @@ public class Player {
     public void inputFromPlayers() throws IOException {
         System.out.println(" *VELKOMMEN TIL ÅRETS SKOLE BORDFODBOLDTURNERING!* ");
 
-        while (start) {     // Mens start er true - skal den blive ved med at køre.
+        while (input) {     // Mens input er true - skal den blive ved med at køre.
             System.out.println("Indtast første spillers navn:");
             playerNamesArray.add(sc.next());
             System.out.println("Indtast andens spillers navn:");
@@ -39,7 +38,7 @@ public class Player {
             System.out.println("Indtast et holdnavn:");
             teamNames = sc.next();
             System.out.println("Jeres hold er nu oprettet. ");
-            start = false;
+            input = false;
             displayList(playerNamesArray, teamNames);
 
             Team teams = new Team(teamNames, playerNamesArray);     // Vi instantierer her fra Team class.
