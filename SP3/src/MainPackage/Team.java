@@ -58,11 +58,14 @@ public class Team {
         this.teamPoints = teamPoints;
     }
 
-    @Override
+        @Override
     public String toString() {
-        return "Team{" +
-                "teamName='" + teamName + '\'' +
-                '}';
+        String members = "";
+        for (String s : teamPlayers){
+            members += s + " ";
+            //System.out.println("Hej");
+        }
+        return teamName + " " + members + haveLost;
     }
 }
 
