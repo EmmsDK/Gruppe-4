@@ -4,23 +4,24 @@ import java.util.*;
 
 public class Team {
     private String teamName;
-    private Boolean haveLost = false;
+    private boolean haveLost = false;
     private ArrayList<String> teamPlayers;
     private int gameWon = 0;
     private int teamPoints;
 
-    public Team(String teamName, Boolean haveLost, int gameWon, int teamPoints) {
-        this.teamName = teamName;
-        this.haveLost = haveLost;
-        this.gameWon = gameWon;
-        this.teamPoints = teamPoints;
+
+    public Team(String _teamName, boolean _haveLost, int _gameWon, int _teamPoints) {
+        this.teamName = _teamName;
+        this.haveLost = _haveLost;
+        this.gameWon = _gameWon;
+        this.teamPoints = _teamPoints;
     }
 
     public String getTeamName() {
         return teamName;
     }
 
-    public Boolean getHaveLost() {
+    public boolean getHaveLost() {
         return haveLost;
     }
 
@@ -40,7 +41,7 @@ public class Team {
         this.teamName = teamName;
     }
 
-    public void setHaveLost(Boolean haveLost) {
+    public void setHaveLost(boolean haveLost) {
         this.haveLost = haveLost;
     }
 
@@ -55,4 +56,12 @@ public class Team {
     public void setTeamPoints(int teamPoints) {
         this.teamPoints = teamPoints;
     }
+
+    @Override
+    public String toString() {
+        return "Team{" +
+                "teamName='" + teamName + '\'' +
+                '}';
+    }
 }
+
