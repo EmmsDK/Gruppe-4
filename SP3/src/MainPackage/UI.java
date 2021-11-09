@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public abstract class UI {
     private ArrayList<Team> teamList = new ArrayList<>();
-    private ArrayList<String> testString;
+    //private ArrayList<String> testString;
     //private ArrayList<Team> teams;
     private String deadline; // Make it a Date (class) or make a Dates class to pass it to
     private ArrayList<String> dates; // Likewise as above
@@ -113,7 +113,7 @@ public abstract class UI {
             String[] element = line.split(" ");
             txtList.add(element);
         }
-        teamAmount = Integer.parseInt(txtList.get(0)[0]);
+        teamAmount = Integer.parseInt(txtList.get(0)[0]); // Muligvis tilføjes noget
         for(int i = 1; i <= teamAmount; i++) {
             String[] element = txtList.get(i);
             ArrayList<String> playerNames = new ArrayList<>();

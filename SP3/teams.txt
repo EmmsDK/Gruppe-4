@@ -1,4 +1,17 @@
-3
+16
+hej j k l false
+med j k l false
+dig j k l false
+jeg j k l false
+hedder j k l false
+kaj j k l false
 BenderSpender Claes Gustav false
-Ego claes heise false
+hvad j k l false
+hedder j k l false
+du j k l false
+god j k l false
+morgen j k l false
+nej j k l false
 Hjort Mark Niklas false
+tak j k l false
+Ego claes heise false
