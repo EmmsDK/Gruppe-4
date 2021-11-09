@@ -5,15 +5,15 @@ import java.io.IOException;
 
 public class Main {
 
-    static Admin ad;
-
-    static {
-        try {
-            ad = new Admin();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+//    static Admin ad;
+//
+//    static {
+//        try {
+//            ad = new Admin();
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     static Player addTeam;
 
@@ -29,7 +29,6 @@ public class Main {
         addTeam.readFromFile("teams.txt");
 
         addTeam.inputFromPlayers();
-
 
     }
 }

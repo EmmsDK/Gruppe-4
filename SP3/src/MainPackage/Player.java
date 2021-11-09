@@ -11,7 +11,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Player extends UI{
-    //Admin admin = new Admin();
     ArrayList<String> playerNamesArray = new ArrayList<>();
     String teamNames = "";
     boolean input = true;
@@ -19,36 +18,6 @@ public class Player extends UI{
 
     public Player() throws FileNotFoundException {      // Hvis der ikke er en fil, så skal der kastes en exception.
 
-    }
-
-    @Override
-    // For admin and user (But overwritten in Player)
-    public void writeToFile(String file) throws IOException {
-        // ArrayList<TestTeam> tmpTeam,
-        try (FileWriter writer = new FileWriter(file)) {
-            //TestTeam tmpTeam = taw;
-            //for (TestTeam t : tmpTeam) {
-            // Changed to abstract
-            writer.write(getTeamList().size()+"\n");
-            // If TestTeam != null?
-            for (Team t : getTeamList()){
-                //(int i = 0; i < tmpTeam.size(); i++){
-                writer.write(t.toString()+"\n");
-            }
-            // If deadline != null?
-//            if(deadline.isBlank()) {
-//                writer.write("01/01/2021");
-//            }
-//            else{
-//                writer.write(getDeadline() + "\n");
-//            }
-//            // If dates != null?
-//            if(getDates().size() < 1) {
-//                for (String s : getDates()) {
-//                    writer.write(s + "\n");
-//                }
-//            }
-        }
     }
 
     public void inputFromPlayers() throws IOException {

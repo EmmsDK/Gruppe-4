@@ -13,6 +13,26 @@ public class Admin extends UI{
     public Admin() throws FileNotFoundException {
     }
 
+
+    // Also add, so their play times (dates) are removed
+    public void removeTeam(String teamName) throws IOException { // Maybe change int to something else, teamName perhaps?
+        if(this.getTeamList().stream().anyMatch(element -> element.getTeamName().equals(teamName))){
+            this.getTeamList().removeIf(element -> (element.getTeamName().equalsIgnoreCase(teamName)));
+        }
+        else{
+            System.out.println("No team with this name");
+            // Call the scanner again here
+        }
+        //this.teams.remove(_teamPlacement);
+        for(int i = 0; i < getTeamList().size(); i++) {
+            System.out.println(getTeamList().get(i));
+        }
+        //this.teams.remove(_teamPlacement);
+        writeTeamToFile("teams.txt");
+    }
+
+
+
 //    //private ArrayList<String> testString;
 //    //private ArrayList<Team> teams;
 //    private String deadline; // Make it a Date (class) or make a Dates class to pass it to

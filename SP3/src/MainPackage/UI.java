@@ -31,7 +31,7 @@ public abstract class UI {
     // Only for admin
     public void changeDeadline(String deadline) throws IOException {
         this.deadline = deadline;
-        writeToFile("teams.txt");
+        writeDateToFile("teams.txt");
     }
 
     // For admin and user
@@ -47,42 +47,39 @@ public abstract class UI {
     // Only for admin / system (program) perhaps
     public void addDates(String date) throws IOException {
         this.dates.add(date);
-        writeToFile("teams.txt");
+        writeDateToFile("teams.txt");
     }
 
     // Only for admin
     public void removeDates(String date) throws IOException {
         // Make exception caught, for when using scanner - so that if it's not a valid date/team, it responds
         this.dates.removeIf(element -> (element.equalsIgnoreCase(date)));
-        writeToFile("teams.txt");
+        writeDateToFile("teams.txt");
     }
 
     // For admin and user
-    public ArrayList<Team> getTeamList() {
-        return teamList;
+    public ArrayList<Team> getTeamList() {return teamList;}
+
+    // For admin and user (But overwritten in Player)
+    public void writeTeamToFile(String file) throws IOException {
+        try (FileWriter writer = new FileWriter(file)) {
+            // Changed to abstract
+            writer.write(teamList.size()+"\n");
+            for (Team t : teamList){
+                writer.write(t.toString()+"\n");
+            }
+        }
     }
 
     // For admin and user (But overwritten in Player)
-    public void writeToFile(String file) throws IOException {
-        // ArrayList<TestTeam> tmpTeam,
+    public void writeDateToFile(String file) throws IOException {
         try (FileWriter writer = new FileWriter(file)) {
-            //TestTeam tmpTeam = taw;
-            //for (TestTeam t : tmpTeam) {
-            // Changed to abstract
-            writer.write(teamList.size()+"\n");
-            // If TestTeam != null?
-            for (Team t : teamList){
-                //(int i = 0; i < tmpTeam.size(); i++){
-                writer.write(t.toString()+"\n");
-            }
-            // If deadline != null?
-            if(deadline.isBlank()) {
+            if(getDeadline().isBlank()) {
                 writer.write("01/01/2021");
             }
             else{
                 writer.write(getDeadline() + "\n");
             }
-            // If dates != null?
             if(getDates().size() < 1) {
                 for (String s : getDates()) {
                     writer.write(s + "\n");
@@ -91,20 +88,19 @@ public abstract class UI {
         }
     }
 
-
     public void setTeamsList(ArrayList<Team> _teams) {
         this.teamList = _teams;
     }
 
     public void addTeam(Team _teams) throws IOException {
         this.teamList.add(_teams);
-        writeToFile("teams.txt");
+        writeTeamToFile("teams.txt");
     }
 
     // This function is called, if a smaller change is made to one of the already existing teams in the list
     public void changeTeamsList(ArrayList<Team> _teams) throws IOException {
         this.teamList = _teams;
-        writeToFile("teams.txt");
+        writeTeamToFile("teams.txt");
     }
 
     // Maybe also have in UI
@@ -150,22 +146,22 @@ public abstract class UI {
 //        writeToFile("teams.txt");
 //    }
 
-    // Also add, so their play times (dates) are removed
-    public void removeTeam(String teamName) throws IOException { // Maybe change int to something else, teamName perhaps?
-        if(this.getTeamList().stream().anyMatch(element -> element.getTeamName().equals(teamName))){
-            this.getTeamList().removeIf(element -> (element.getTeamName().equalsIgnoreCase(teamName)));
-        }
-        else{
-            System.out.println("No team with this name");
-            // Call the scanner again here
-        }
-        //this.teams.remove(_teamPlacement);
-        for(int i = 0; i < getTeamList().size(); i++) {
-            System.out.println(getTeamList().get(i));
-        }
-        //this.teams.remove(_teamPlacement);
-        writeToFile("teams.txt");
-    }
+//    // Also add, so their play times (dates) are removed
+//    public void removeTeam(String teamName) throws IOException { // Maybe change int to something else, teamName perhaps?
+//        if(this.getTeamList().stream().anyMatch(element -> element.getTeamName().equals(teamName))){
+//            this.getTeamList().removeIf(element -> (element.getTeamName().equalsIgnoreCase(teamName)));
+//        }
+//        else{
+//            System.out.println("No team with this name");
+//            // Call the scanner again here
+//        }
+//        //this.teams.remove(_teamPlacement);
+//        for(int i = 0; i < getTeamList().size(); i++) {
+//            System.out.println(getTeamList().get(i));
+//        }
+//        //this.teams.remove(_teamPlacement);
+//        writeTeamToFile("teams.txt");
+//    }
 
     /* Below are all the functions for making smaller changes to the individual teams, such as Team name, Team member,
        whether they have lost and upcoming is each teams points and wins (amount) */
