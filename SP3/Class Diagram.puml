@@ -4,70 +4,83 @@ class Main{}
 Main *-- UI
 
 class UI{
-    + String userInput(Scanner msg)
-    - Scanner writeToFile()
+    - ArrayList<Team> teamList;
+    - String deadline;
+    - ArrayList<String> dates;
+    - int teamAmount;
+    + String getDeadline();
+    + void setDeadlineFirst(String deadline);
+    + void changeDeadline(String deadline);
+    + ArrayList<String> getDates();
+    + void addDates(String date);
+    + void removeDates(String date);
+    + ArrayList<Team> getTeamList();
+    + void writeTeamToFile(String file);
+    + void writeDateToFile(String file);
+    + void setTeamList();
+    + void addTeam();
+    + void changeTeamList(ArrayList<Team> _teams);
+    + void readFromFile(String file);
+    + void changeTeam(); Overload
 }
 
 UI *-- Player
 UI *-- Team
 UI *-- Admin
+
 class Player{
-    - String playerName;
-    - ArrayList<String> teamPlayers;
+    - ArrayList<String> playerNamesArray;
+    - String teamNames;
+    - boolean input;
+    - Scanner sc;
+
+    + void inputFromPlayers();
+    - void displayList(ArrayList teamsArray, String teamDesc);
+    - int playerChoiceInt();
 }
 
 class Team{
     - String teamName;
-    - ArrayList<String> players;
-    - Boolean haveLost = false;
-    - int gamesWon = 0;
-    - int teamPoints;
+    - ArrayList<String> teamPlayers;
+    + String getTeamName();
+    + ArrayList<String> getTeamPlayers();
+    + void setTeamName();
+    + void setTeamPlayers();
+
+
 }
 
 class Admin{
-    - Scanner readFromFile;
-    - String deadline;
-    + String setDeadline()
-    + int setGamesWon(int won)
-    + Boolean setHaveLost(Boolean lost)
-    + int setTeamPoints(int teamPoints)
+    - Scanner sc;
+    - void removeTeam(String teamName);
+
+
 }
 
 class Date{
-    - int day;
-    - int month;
-    - int year;
-    + void setDate(int _day, int _month, int _year)
-    + String getDate()
+
 }
 
 class Knockout{
-    - Scanner setGameDate;
-    - void sortTeams(ArrayList<Team> _teams)
-    + void setGameDate(ArrayList<Team> _teams, Scanner input)
-    + void printGamePlan(ArrayList<Team> _teams)
+
 }
 
 class GroupStage{
-    - ArrayList<ArrayList> bracket = new ArrayList<>()
-    - ArrayList<Team> teamPlacement = new ArrayList<>()
+
+
 }
 
-Interface Tournament{
-    - ArrayList<ArrayList> matches
-    + void setGameDate(ArrayList<Team> _teams), Scanner input)
-    + void printGamePlan(ArrayList<Team> _teams)
-    + void makeTournament()
+class Tournament{
+    - ArrayList<ArrayList> tournament;
+    - ArrayList<Team> match;
+    - ArrayList<Team> teams;
+
+    + ArrayList<ArrayList<Teams>> randomizeMatches(ArrayList<Team> teams, int bracketSize);
+    + void nextBracket();
+
 }
 
-Abstract Matches{
-    - ArrayList<Team> match
-    - Team teamWon()
-}
-
-
-
-Team <-- Player
+Team <-- Player : 2..16
 Team <-- Matches
 
 Admin <-- Knockout
