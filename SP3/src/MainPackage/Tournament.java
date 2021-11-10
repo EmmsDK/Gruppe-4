@@ -16,11 +16,11 @@ public class Tournament {
         ArrayList<ArrayList<Team>> _tournament = new ArrayList<>();
         Collections.shuffle(teams);
         // Keeps tracks of amount of games that is to be played
-        for (int f = 0; f < Math.ceil(teams.size() / bracketSize); f++) {
+        for (int i = 0; i < Math.ceil(teams.size() / bracketSize); i++) {
             ArrayList<Team> innerMatch = new ArrayList<>();
             // Adds 2 teams to a match against each other
-            for (int i = 0; i < bracketSize; i++) {
-                innerMatch.add(teams.get(f*bracketSize+i));
+            for (int f = 0; f < bracketSize; f++) {
+                innerMatch.add(teams.get(i*bracketSize+f));
             }
             // Adds the match (ArrayList) to the tournament
             _tournament.add(innerMatch);
@@ -29,21 +29,35 @@ public class Tournament {
         return _tournament;
     }
 
-    public void nextBracket(ArrayList<ArrayList<Team>> _tournament, int bracketSize, int round){
-        // ArrayList<ArrayList>
-        ArrayList<ArrayList> newBracket = new ArrayList<>();
-        //System.out.println(_tournament.size() / bracketSize);
-        for(int i = 0; i < _tournament.size(); i++){
-            //System.out.println("I: "+i);
-            ArrayList<Team> oldInnerMatch = _tournament.get(i);
-            ArrayList<Team> newInnerMatch = new ArrayList<>();
-            for(int f = 0; f < _tournament.size() / bracketSize; f++){
-                //System.out.println((i*(bracketSize/2)*round)+f);
-                if(_tournament.get(i*bracketSize+f).get(f).getHaveLost() == false){
-                    System.out.println(i*bracketSize+f);
+    public ArrayList<ArrayList<Team>> nextBracket(ArrayList<ArrayList<Team>> _tournament, int bracketSize, int round){
+        ArrayList<ArrayList<Team>> newBracket = new ArrayList<>();
+        ArrayList<Team> winningTeams = new ArrayList<>();
+        for(ArrayList<Team> a : _tournament){
+            for(Team t : a){
+                if(t.getHaveLost() == false) {
+                    winningTeams.add(t);
                 }
             }
         }
-        //return _tournament;
+        for (int i = 0; i < winningTeams.size() / bracketSize; i++){
+            ArrayList<Team> innerMatch = new ArrayList<>();
+            for (int f = 0; f < bracketSize; f++){
+                innerMatch.add(winningTeams.get(i*bracketSize+f));
+            }
+            newBracket.add(innerMatch);
+        }
+        System.out.println(newBracket);
+//        for(int i = 0; i < _tournament.size(); i++){
+//            //System.out.println("I: "+i);
+//            ArrayList<Team> oldInnerMatch = _tournament.get(i);
+//            ArrayList<Team> newInnerMatch = new ArrayList<>();
+//            for(int f = 0; f < _tournament.size() / bracketSize; f++){
+//                //System.out.println((i*(bracketSize/2)*round)+f);
+//                if(_tournament.get(i*bracketSize+f).get(f).getHaveLost() == false){
+//                    System.out.println(i*bracketSize+f);
+//                }
+//            }
+//        }
+        return newBracket;
     }
 }
