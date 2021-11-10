@@ -1,5 +1,8 @@
 @startuml
-class Main{}
+class Main {
+
+
+}
 
 Main *-- UI
 
@@ -57,11 +60,11 @@ class Admin{
 
 }
 
-class Date{
-
-}
 
 class Knockout{
+    - int bracketSize;
+    - ArrayList<ArrayList<Team>> brackets;
+
 
 }
 
@@ -74,27 +77,25 @@ class Tournament{
     - ArrayList<ArrayList> tournament;
     - ArrayList<Team> match;
     - ArrayList<Team> teams;
-
     + ArrayList<ArrayList<Teams>> randomizeMatches(ArrayList<Team> teams, int bracketSize);
     + void nextBracket();
 
 }
 
-Team <-- Player : 2..16
-Team <-- Matches
+class Interface {
+    - String username;
+    - String password;
+    - Scanner start;
+}
 
+Team <-- Player : 2..16
+Main <-- Interface : ..*
 Admin <-- Knockout
 Admin <-- GroupStage
-Admin <-- Date
 Admin <-- Team
-
-Matches *-- GroupStage
-Matches *-- Knockout
 
 Tournament *-- Knockout
 Tournament *-- GroupStage
-Knockout <-- Date
-GroupStage <-- Date
 
 
 @enduml
