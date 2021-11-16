@@ -31,7 +31,7 @@ public abstract class UI {
     // Only for admin
     public void changeDeadline(String deadline) throws IOException {
         this.deadline = deadline;
-        writeDateToFile("teams.txt");
+        writeToFile("teams.txt");
     }
 
     // For admin and user
@@ -47,34 +47,28 @@ public abstract class UI {
     // Only for admin / system (program) perhaps
     public void addDates(String date) throws IOException {
         this.dates.add(date);
-        writeDateToFile("teams.txt");
+        writeToFile("teams.txt");
     }
 
     // Only for admin
     public void removeDates(String date) throws IOException {
         // Make exception caught, for when using scanner - so that if it's not a valid date/team, it responds
         this.dates.removeIf(element -> (element.equalsIgnoreCase(date)));
-        writeDateToFile("teams.txt");
+        writeToFile("teams.txt");
     }
 
     // For admin and user
     public ArrayList<Team> getTeamList() {return teamList;}
 
     // For admin and user (But overwritten in Player)
-    public void writeTeamToFile(String file) throws IOException {
+    public void writeToFile(String file) throws IOException {
         try (FileWriter writer = new FileWriter(file)) {
             // Changed to abstract
             writer.write(teamList.size()+"\n");
             for (Team t : teamList){
                 writer.write(t.toString()+"\n");
             }
-        }
-    }
-
-    // For admin and user (But overwritten in Player)
-    public void writeDateToFile(String file) throws IOException {
-        try (FileWriter writer = new FileWriter(file)) {
-            if(getDeadline().isBlank()) {
+            if(getDeadline() == null || getDeadline().isBlank()) {
                 writer.write("01/01/2021");
             }
             else{
@@ -88,19 +82,37 @@ public abstract class UI {
         }
     }
 
+    // For admin and user (But overwritten in Player)
+//    public void writeDateToFile(String file) throws IOException {
+//        writeTeamToFile(file);
+//        try (FileWriter writer = new FileWriter(file)) {
+//            if(getDeadline().isBlank()) {
+//                writer.write("01/01/2021");
+//            }
+//            else{
+//                writer.write(getDeadline() + "\n");
+//            }
+//            if(getDates().size() < 1) {
+//                for (String s : getDates()) {
+//                    writer.write(s + "\n");
+//                }
+//            }
+//        }
+//    }
+
     public void setTeamsList(ArrayList<Team> _teams) {
         this.teamList = _teams;
     }
 
     public void addTeam(Team _teams) throws IOException {
         this.teamList.add(_teams);
-        writeTeamToFile("teams.txt");
+        writeToFile("teams.txt");
     }
 
     // This function is called, if a smaller change is made to one of the already existing teams in the list
     public void changeTeamsList(ArrayList<Team> _teams) throws IOException {
         this.teamList = _teams;
-        writeTeamToFile("teams.txt");
+        writeToFile("teams.txt");
     }
 
     // Maybe also have in UI

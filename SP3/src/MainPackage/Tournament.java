@@ -11,9 +11,9 @@ public class Tournament {
     private ArrayList<Team> teams = new ArrayList<>();
     // In non-knock-out make a
 
-    public ArrayList<ArrayList<Team>> randomizeMatches(ArrayList<Team> teams, int bracketSize) {
+    public ArrayList<ArrayList> randomizeMatches(ArrayList<Team> teams, int bracketSize) {
         //ArrayList<ArrayList>
-        ArrayList<ArrayList<Team>> _tournament = new ArrayList<>();
+        ArrayList<ArrayList> _tournament = new ArrayList<>();
         Collections.shuffle(teams);
         // Keeps tracks of amount of games that is to be played
         for (int i = 0; i < Math.ceil(teams.size() / bracketSize); i++) {
@@ -29,8 +29,8 @@ public class Tournament {
         return _tournament;
     }
 
-    public ArrayList<ArrayList<Team>> nextBracket(ArrayList<ArrayList<Team>> _tournament, int bracketSize, int round){
-        ArrayList<ArrayList<Team>> newBracket = new ArrayList<>();
+    public ArrayList<ArrayList> nextBracket(ArrayList<ArrayList> _tournament, int bracketSize, int round){
+        ArrayList<ArrayList> newBracket = new ArrayList<>();
         ArrayList<Team> winningTeams = new ArrayList<>();
         for(ArrayList<Team> a : _tournament){
             for(Team t : a){

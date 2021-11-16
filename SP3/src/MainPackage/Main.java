@@ -6,15 +6,15 @@ import java.util.ArrayList;
 
 public class Main {
 
-//    static Admin ad;
-//
-//    static {
-//        try {
-//            ad = new Admin();
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    static Admin ad;
+
+    static {
+        try {
+            ad = new Admin();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     static Player addTeam;
 
@@ -29,11 +29,11 @@ public class Main {
     static Tournament tour = new Tournament();
 
     public static void main(String[] args) throws IOException {
-        addTeam.readFromFile("teams.txt");
+        ad.readFromFile("teams.txt");
 
-        ArrayList<ArrayList<Team>> test = tour.randomizeMatches(addTeam.getTeamList(), 2);
-        tour.nextBracket(test, 2, 1);
-        addTeam.inputFromPlayers();
+        //ArrayList<ArrayList> test = tour.randomizeMatches(addTeam.getTeamList(), 2);
+        //tour.nextBracket(test, 2, 1);
+        ad.inputFromPlayers();
 
     }
 }
