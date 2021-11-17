@@ -28,8 +28,8 @@ public class Knockout extends Tournament{
     public void addMatchDates(String _date, int _matchNumber){
         /* Checking to see if there already is an date on this match - change it so it looks
         at objects and not the size of the match*/
-        if(this.tournament.get(_matchNumber-1).size() < 3) {
-            this.tournament.get(_matchNumber - 1).add(_date);
+        if(this.tournament.get(_matchNumber).size() < 3) {
+            this.tournament.get(_matchNumber).add(_date);
         }
         else{
             // Call exception, a date already exists and send it back to the scanner - perhaps just do this in admin

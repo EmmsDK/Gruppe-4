@@ -37,206 +37,50 @@ public class Admin extends UI{
     Scanner sc = new Scanner(System.in);
 
 
-    public void inputFromPlayers() throws IOException {
+    public void inputFromAdmin() throws IOException {
+        System.out.println("Du er succesfuldt logget ind som admin");
         while (input) {     // Mens input er true - skal den blive ved med at køre.
             //Tilføj deadline
             //Ændre deadline
             //Ændre et hold - holdnavn, hold medlem, hold har tabt
             //Fjern et hold
             //Tilføj/ændrer kamp dato
-            System.out.println("Som admin hvad vil du?\n1: Tilføj/ændre deadline.\n" +
+            System.out.println("Vælg en af følgende:\n1: Tilføj/ændre deadline.\n" +
                     "2: Ændre/fjern hold.\n3: Opret turnering\n4:Tilføj/ændre kamp dato.\n5: Få vist holdene\nQ: Quit");
             //int userChoice = playerChoiceInt();
-            String userInput = sc.next();
-            if(Integer.parseInt(userInput) == 1){
-                inputDeadline();
-                continue;
+            if(sc.hasNextInt()) {
+                String userInput = sc.next();
+                if (Integer.parseInt(userInput) == 1) {
+                    inputDeadline(); // Doesn't save it in txt file
+                    System.out.println();
+                    continue;
+                } else if (Integer.parseInt(userInput) == 2) {
+                    inputTeams();
+                    continue;
+                } else if (Integer.parseInt(userInput) == 3) {
+                    inputTournament();
+                    System.out.println();
+                    continue;
+                } else if (Integer.parseInt(userInput) == 4) {
+                    inputMatchDate();
+                    System.out.println();
+                    continue;
+                } else if (Integer.parseInt(userInput) == 5) {
+                    inputTeam();
+                    System.out.println();
+                    continue;
+                }
             }
-            else if(Integer.parseInt(userInput) == 2){}
-            else if(Integer.parseInt(userInput) == 3){}
-            else if(Integer.parseInt(userInput) == 4){}
-            else if(Integer.parseInt(userInput) == 5){}
-            else if(userInput.equalsIgnoreCase("q")){}
             else{
-                System.out.println("Ikke et validt svar, angiv et tal mellem 1 og 5 eller q.");
-                System.out.println();
-                continue;
-            }
-            switch(sc.nextInt()){
-                case 1:
-                    if(getDeadline().equals("01/01/2021")) {
-                        System.out.println("Tilføj deadline:");
-                        //Make exception case, so it's xx/yy/zzzz for sure
-                        setDeadlineFirst(sc.next());
-                    }
-                    else{
-                        System.out.println("Ændre deadline:");
-                        changeDeadline(sc.next());
-                    }
+                String userInput = sc.next();
+                if(userInput.equalsIgnoreCase("q")){
                     break;
-                case 2:
-                    if(teamAmount == 0){
-                        System.out.println("Der er ingen hold at kunne ændre eller fjerne, vælg noget nyt.");
-                        //Kald scanner igen / break loopet her og restart det
-                    }
-                    else{
-                        System.out.println("Hvilket hold vil du ændre eller fjerne?\n");
-                        int hold = 1;
-                        for (Team t : getTeamList()){
-                            System.out.print("Hold "+hold+": "+t.toString()+" | ");
-                            if(hold%3 == 0){
-                                System.out.println();
-                            }
-                            hold++;
-                        }
-                        // Make exception for, if it's not an integer
-                        int pickedTeam = sc.nextInt()-1;
-                        if(pickedTeam < getTeamList().size() || pickedTeam >= 0){
-                            //int pickedTeam = sc.nextInt()-1;
-                            System.out.println("1: Fjern hold eller 2: ændre holdet");
-                            // Lav exceptions
-
-                            if(sc.nextInt() == 1){
-                                removeTeam(getTeamList().get(pickedTeam).getTeamName());
-                                continue;
-                                //Kald scanner igen
-                            }
-                            if(sc.nextInt() == 2){
-                                System.out.println("Vil du ændre i 1: Holdnavnet\n2: Spiller navne\n3: Hold tabt");
-                                if(sc.nextInt() == 1){
-                                    System.out.println("Skriv det nye navn:");
-                                    changeTeam(sc.next(), pickedTeam);
-                                }
-                                else if(sc.nextInt() == 2){
-                                    int playerAmount = 0;
-                                    ArrayList<String> newNames = new ArrayList<>();
-                                    while(playerAmount < getTeamList().get(pickedTeam).getTeamPlayers().size()){
-                                        System.out.println("Skriv navnet på "+(playerAmount+1)+". spiller:");
-                                        newNames.add(sc.next());
-                                    }
-                                    changeTeam(newNames, pickedTeam);
-                                }
-                                else if (sc.nextInt() == 3){
-                                    String tabt = "";
-                                    if(getTeamList().get(pickedTeam).getHaveLost() == true){
-                                        System.out.println("Holdet har allerede tabt");
-                                        // Kald scanner, eventuelt skal admin kunne ændre i hasLost, selv hvis du har tabt
-                                    }
-                                    else{
-                                        System.out.println("Holdet står til ikke at have tabt endnu, har de tabt?\n" +
-                                                "1: Ja\n2: Nej");
-                                        if(sc.nextInt() == 1){
-                                            changeTeam(true, pickedTeam);
-                                            System.out.println("Holdet står nu til at have tabt");
-                                            //Kald scanner
-                                        }
-                                        else{
-                                            System.out.println("Der bliver ikke ændret på holdet.");
-                                            //Kald scanner
-                                        }
-                                    }
-                                }
-                                else{
-                                    System.out.println("Ikke et validt input, prøv igen:");
-                                    //Kald scanner
-                                }
-                            }
-                        }
-                        else{
-                            System.out.println("Der er ikke et hold med dette nummer, prøv igen:");
-                            continue;
-                            //Kald scanner igen
-                        }
-                    }
-                    break;
-                case 3:
-                    if(teamAmount > 1){
-                        System.out.println("Er det en (1) knockout- eller (2) Group stage turnering:");
-                        if(sc.nextInt() == 1) {
-                            Knockout turnering = new Knockout(getTeamList());
-                            knockoutTournaments.add(turnering);
-                            // Add so there can be more tournaments and not just the first (0) in the list
-                            knockoutTournaments.get(0).makeTournament(getDeadline());
-                        }
-                        else if (sc.nextInt() == 2){
-                            // Implementer group stage kald
-                        }
-                        else{
-                            System.out.println("Ikke et validt kald");
-                            // Kald scanner
-                        }
-                    }
-                    break;
-                case 4: // Kald turnering før hold datoer - 4:Tilføj/ændre kamp dato.
-                    //Checks that there are tournaments, whose dates can be changed
-                    if(knockoutTournaments.size() != 0 || groupStageTournament.size() != 0){
-                        // Make input for whether it's a knockout or groupstage tournament the admin wants to change
-                        System.out.println("Hvilken kamp vil du ændre datoen på:");
-                        int kamp = 1;
-                        //Change the (0), if there is more tournaments in the list
-                        for(ArrayList a : knockoutTournaments.get(0).getTournament()){
-                            //Make sure, if there is only 1 team in the list, it dosen't bug
-                            Team team1 = (Team) a.get(0); // Make exceptions for if it not a Team object
-                            Team team2 = (Team) a.get(1); // -||-
-                            System.out.print("Kamp "+kamp+": "+team1.getTeamName()+" vs. "+team2.getTeamName()+" - "+a.get(2));
-                            System.out.println();
-                            kamp++;
-                        }
-                        if(sc.nextInt() > knockoutTournaments.get(0).getTournament().size() || sc.nextInt() < 1){ //Ændre (0)
-                            System.out.println("Ikke et validt input, skriv venligst et nummer mellem 1-"+knockoutTournaments.get(0).getTournament().size());
-                            // call scanner
-                        }
-                        else{
-                            int chosenMatch = sc.nextInt()-1;
-                            // Make toString override in Knockout, that returns "Hold: team1 vs. team2 - Kamp dato: xx/yy/zzzz
-                            System.out.println("Kampen: "+knockoutTournaments.get(0).toStringMatch(chosenMatch));
-                            System.out.println("Er valgt, hvilken dato skal denne kamp spilles:");
-                            if(knockoutTournaments.get(0).getTournament().get(chosenMatch).size() > 2){
-                                // Call change date instead
-                            }
-                            else{
-                                //Make sure input is date xx/yy/zzzz - make exception for it
-                                knockoutTournaments.get(0).addMatchDates(sc.next(), chosenMatch);
-                            }
-                        }
-                    }
-                    else{
-                        System.out.println("Der er på nuværende tidspunkt ikke oprettet nogle turneringer, opret en" +
-                                " for at kunne ændre datoerne på disse");
-                        // Kald scanner
-                    }
-                    break;
-                case 5:
-                    if(knockoutTournaments.size() != 0 || groupStageTournament.size() != 0){
-                        int kamp = 1;
-                        //Change the (0), if there is more tournaments in the list
-                        for(ArrayList a : knockoutTournaments.get(0).getTournament()){
-                            //Make sure, if there is only 1 team in the list, it dosen't bug
-                            Team team1 = (Team) a.get(0); // Make exceptions for if it not a Team object
-                            Team team2 = (Team) a.get(1); // -||-
-                            System.out.print("Kamp "+kamp+": "+team1.getTeamName()+" vs. "+team2.getTeamName()+" - "+a.get(2));
-                            System.out.println();
-                            kamp++;
-                        }
-                    }
-                    else if(teamAmount > 0){
-                        int hold = 1;
-                        for (Team t : getTeamList()){
-                            System.out.print("Hold "+hold+": "+t.toString()+" | ");
-                            if(hold%3 == 0){
-                                System.out.println();
-                            }
-                            hold++;
-                        }
-                    }
-                    else{
-                        System.out.println("Hverken nogle turneringer eller hold er blevet oprettet, derved intet at vise");
-                        // Call scanner
-                    }
-                    break;
-            }
-            if(sc.next().equalsIgnoreCase("q")){
-                input = false;
+                }
+                else {
+                    System.out.println("Ikke et validt svar, angiv et tal mellem 1 og 5 eller q.");
+                    System.out.println();
+                    continue;
+                }
             }
         }
     }
@@ -248,7 +92,7 @@ public class Admin extends UI{
             setDeadlineFirst(sc.next());
         }
         else{
-            System.out.println("Nuværende deadline: "+getDeadline()+" ændre deadline:");
+            System.out.println("Nuværende deadline: "+getDeadline()+", ændre deadline til:");
             changeDeadline(sc.next());
         }
     }
@@ -269,33 +113,37 @@ public class Admin extends UI{
                 hold++;
             }
             // Make exception for, if it's not an integer
-            teamInput = sc.nextInt()-1;
-            int pickedTeam = teamInput;
-            if(teamInput < getTeamList().size() || teamInput >= 0){
-                //int pickedTeam = sc.nextInt()-1;
-                System.out.println("1: Fjern hold eller 2: ændre holdet");
+            //teamInput = sc.nextInt()-1;
+
+            int pickedTeam = inputNumber(getTeamList().size(), 1)-1;
+            if(pickedTeam > -1){
+                System.out.println("Vil du - 1: Fjerne holdet eller 2: ændre holdet");
                 // Lav exceptions
-                teamInput = sc.nextInt();
+                teamInput = inputNumber(2, 1);
                 if(teamInput == 1){
                     removeTeam(getTeamList().get(pickedTeam).getTeamName());
                     //Kald scanner igen
                 }
                 else if(teamInput == 2){
-                    System.out.println("Vil du ændre i 1: Holdnavnet\n2: Spiller navne\n3: Hold tabt");
-                    if(sc.nextInt() == 1){
+                    System.out.println("Vil du ændre i\n1: Holdnavnet\n2: Spiller navne\n3: Hold tabt");
+                    teamInput = inputNumber(3, 1);
+                    if(teamInput == 1){
                         System.out.println("Skriv det nye navn:");
                         changeTeam(sc.next(), pickedTeam);
                     }
-                    else if(sc.nextInt() == 2){
+                    else if(teamInput == 2){
+                        System.out.println("Hvor mange medlemmer skal der være på dette hold:");
+                        teamInput = inputNumber(4, 2);
                         int playerAmount = 0;
                         ArrayList<String> newNames = new ArrayList<>();
-                        while(playerAmount < getTeamList().get(pickedTeam).getTeamPlayers().size()){
+                        while(playerAmount < teamInput){
                             System.out.println("Skriv navnet på "+(playerAmount+1)+". spiller:");
-                            newNames.add(sc.next());
+                            newNames.add(sc.next()); // Get this tested, and make sure it works
+                            playerAmount++;
                         }
                         changeTeam(newNames, pickedTeam);
                     }
-                    else if (sc.nextInt() == 3){
+                    else if (teamInput == 3){
                         String tabt = "";
                         if(getTeamList().get(pickedTeam).getHaveLost() == true){
                             System.out.println("Holdet har allerede tabt");
@@ -304,76 +152,130 @@ public class Admin extends UI{
                         else{
                             System.out.println("Holdet står til ikke at have tabt endnu, har de tabt?\n" +
                                     "1: Ja\n2: Nej");
-                            if(sc.nextInt() == 1){
+                            teamInput = inputNumber(2,1);
+                            if(teamInput == 1){
                                 changeTeam(true, pickedTeam);
                                 System.out.println("Holdet står nu til at have tabt");
                                 //Kald scanner
                             }
-                            else{
+                            else if(teamInput == 2){
                                 System.out.println("Der bliver ikke ændret på holdet.");
-                                //Kald scanner
                             }
                         }
                     }
-                    else{
-                        System.out.println("Ikke et validt input, prøv igen:");
-                        //Kald scanner
-                    }
                 }
-                else{
-                    invalidInput();
-                }
-            }
-            else{
-                System.out.println("Der er ikke et hold med dette nummer, prøv igen:");
-                //Kald scanner igen
             }
         }
     }
     private void inputTournament(){
-
+        int tournamentInput;
+        if(teamAmount > 1){
+            System.out.println("Er det en (1) knockout- eller (2) Group stage turnering:");
+            tournamentInput = inputNumber(2, 1);
+            if(tournamentInput == 1) {
+                Knockout turnering = new Knockout(getTeamList());
+                knockoutTournaments.add(turnering);
+                // Add so there can be more tournaments and not just the first (0) in the list
+                knockoutTournaments.get(0).makeTournament(getDeadline());
+            }
+            else if (tournamentInput == 2){
+                // Implementer group stage kald
+            }
+        }
     }
     private void inputMatchDate(){
-
+        int dateInput;
+        //Checks that there are tournaments, whose dates can be changed
+        if(knockoutTournaments.size() != 0 || groupStageTournament.size() != 0){
+            // Make input for whether it's a knockout or groupstage tournament the admin wants to change
+            System.out.println("Hvilken kamp vil du ændre datoen på:");
+            int kamp = 1;
+            //Change the (0), if there is more tournaments in the list
+            for(ArrayList a : knockoutTournaments.get(0).getTournament()){
+                //Make sure, if there is only 1 team in the list, it dosen't bug
+                Team team1 = (Team) a.get(0); // Make exceptions for if it not a Team object
+                Team team2 = (Team) a.get(1); // -||-
+                String date = "Ingen nuværende dato";
+                if(a.size() > 2){ // Make sure it's updated for groupStage, currently only works for knockout
+                    date = (String) a.get(2);
+                }
+                System.out.print("Kamp "+kamp+": "+team1.getTeamName()+" vs. "+team2.getTeamName()+" - "+date);
+                System.out.println();
+                kamp++;
+            }
+            dateInput = inputNumber(knockoutTournaments.get(0).getTournament().size(), 1)-1;
+            if(dateInput > -1){
+                // Make toString override in Knockout, that returns "Hold: team1 vs. team2 - Kamp dato: xx/yy/zzzz
+                System.out.println("Kampen: "+knockoutTournaments.get(0).toStringMatch(dateInput));
+                System.out.println("Er valgt, hvilken dato skal denne kamp spilles:");
+                String dateString = sc.next();
+                if(knockoutTournaments.get(0).getTournament().get(dateInput).size() > 2){
+                    // Call change date instead
+                }
+                else{
+                    //Make sure input is date xx/yy/zzzz - make exception for it
+                    knockoutTournaments.get(0).addMatchDates(dateString, dateInput);
+                }
+            }
+        }
+        else{
+            System.out.println("Der er på nuværende tidspunkt ikke oprettet nogle turneringer, opret en" +
+                    " for at kunne ændre datoerne på disse");
+            // Kald scanner
+        }
     }
-    private void inputTeam(){
 
+    private void inputTeam(){
+        if(knockoutTournaments.size() != 0 || groupStageTournament.size() != 0){
+            int kamp = 1;
+            //Change the (0), if there is more tournaments in the list
+            for(ArrayList a : knockoutTournaments.get(0).getTournament()){
+                //Make sure, if there is only 1 team in the list, it dosen't bug
+                Team team1 = (Team) a.get(0); // Make exceptions for if it not a Team object
+                Team team2 = (Team) a.get(1); // -||-
+                String date = "Ingen nuværende dato";
+                if(a.size() > 2){ // Make sure it's updated for groupStage, currently only works for knockout
+                    date = (String) a.get(2);
+                }
+                System.out.print("Kamp "+kamp+": "+team1.getTeamName()+" vs. "+team2.getTeamName()+" - "+date);
+                System.out.println();
+                kamp++;
+            }
+        }
+        else if(teamAmount > 0){
+            int hold = 1;
+            for (Team t : getTeamList()){
+                System.out.print("Hold "+hold+": "+t.toString()+" | ");
+                if(hold%3 == 0){
+                    System.out.println();
+                }
+                hold++;
+            }
+        }
+        else{
+            System.out.println("Hverken turneringer eller hold er blevet oprettet, derved intet at vise");
+            // Call scanner
+        }
+    }
+
+    // Check whether the input is a number, as well as if it within the given range
+    private int inputNumber(int maxValue, int minValue){
+        int _number = 0;
+        if(sc.hasNextInt()){
+            _number = sc.nextInt();
+            if(_number > maxValue || _number < minValue){
+                invalidInput();
+                _number = 0;
+            }
+        }
+        else{
+            invalidInput();
+        }
+        return _number;
     }
 
     private void invalidInput(){
         System.out.println("Ikke et validt input, prøv igen:");
-    }
-
-    private void displayList(ArrayList teamsArray, String teamDesc) {     // Metode der viser de tilføjede holdnavne.
-        System.out.print(teamDesc + ": ");
-        for (int i = 0; i < teamsArray.size() - 1; i++) {   // -1 for at stoppe ved den anden siste ','.
-            System.out.print(teamsArray.get(i) + ", ");
-        }
-        System.out.println(teamsArray.get(teamsArray.size()-1));    // for at få det sidste element i arrayet.
-    }
-
-    private int playerChoiceInt() {        // Exception metode
-        int choice = 0;
-        System.out.println("Er i flere spillere? Indtast '1' for ja eller '2' for nej.");  // Spørger her
-        try {
-            String inStr = sc.next();
-            int inInt = Integer.parseInt(inStr);
-            if (inInt < 1 || inInt > 2) {       // Hvis der bliver indtastet alt andet end 1 eller 2, så skal der throwes en exception
-                throw new InputMismatchException(); // Hvis inputtet/typen ikke passer til metoden. ('throw' bruges til at throw en specifik exception for en metode)
-                // "InputMismatchException" opstår når man tager input fra brugeren, som ikke matcher metoden.
-                // Fx hvis man læser en integer data med nextInt metoden, og værdien der bliver skrevet er af String, så sker der en fejl.
-            } else {
-                choice = inInt;     // Sætter choice til inInt, for at kunne køre videre hvis brugere skriver 1 eller 2.
-            }
-        } catch (InputMismatchException e) {     // Exception specifikt for scanneren, så prøv igen.
-            System.out.println(" *FORKERT TAL INPUT! Du kan kun skrive '1' eller '2'!* ");
-            playerChoiceInt();
-        } catch (NumberFormatException e) {     // Exception for overall, hvis brugeren skriver en string i stedet for et tal, så prøv igen.
-            // Kastes når man prøver at convert en string til et tal, heri fx int, float osv.
-            System.out.println(" *FORKERT INPUT, DET KAN IKKE VÆRE BOGSTAVER! Du kan kun skrive '1' eller '2'!* ");
-            playerChoiceInt();
-        }
-        return choice;
     }
 }
 

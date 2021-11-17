@@ -179,26 +179,26 @@ public abstract class UI {
        whether they have lost and upcoming is each teams points and wins (amount) */
     public void changeTeam(Boolean bob, int i) throws IOException {
         ArrayList<Team> _teamList = getTeamList();
-        Team _team = _teamList.get(i-1);
+        Team _team = _teamList.get(i);
         _team.setHaveLost(bob);
-        _teamList.set(i-1, _team);
+        _teamList.set(i, _team);
         changeTeamsList(_teamList);
     }
 
     public void changeTeam(String _teamName, int i) throws IOException {
         ArrayList<Team> _teamList = getTeamList();
-        Team _team = _teamList.get(i-1);
+        Team _team = _teamList.get(i);
         _team.setTeamName(_teamName);
-        _teamList.set(i-1, _team);
+        _teamList.set(i, _team);
         changeTeamsList(_teamList);
     }
 
     public void changeTeam(ArrayList<String> _teamMembers, int i) throws IOException {
         // Add how team members are added (from player class)
         ArrayList<Team> _teamList = getTeamList();
-        Team _team = _teamList.get(i-1);
+        Team _team = _teamList.get(i);
         _team.setTeamPlayers(_teamMembers);
-        _teamList.set(i-1, _team);
+        _teamList.set(i, _team);
         changeTeamsList(_teamList);
     }
 

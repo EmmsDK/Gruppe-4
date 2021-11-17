@@ -8,63 +8,73 @@ import java.util.Scanner;
 
 public class Interface {
     boolean input = true;
+    String passWord = "1234";
     Scanner sc = new Scanner(System.in);
-//
-//    public void inputFromPlayers() throws IOException {
-//        System.out.println(" *VELKOMMEN TIL ÅRETS SKOLE BORDFODBOLDTURNERING!* ");
-//        System.out.println(" * Er du en spill");
-//        while (input) {     // Mens input er true - skal den blive ved med at køre.
-//            System.out.println("Indtast første spillers navn:");
-//            playerNamesArray.add(sc.next());
-//            System.out.println("Indtast andens spillers navn:");
-//            playerNamesArray.add(sc.next());
-//
-//            int userChoice = playerChoiceInt();
-//            if (userChoice == 1) {
-//                System.out.println("Indtast næste spillers navn:");
-//                playerNamesArray.add(sc.next());
-//
-//            }
-//            System.out.println("Indtast et holdnavn:");
-//            teamNames = sc.next();
-//            System.out.println("Jeres hold er nu oprettet. ");
-//            input = false;
-//            displayList(playerNamesArray, teamNames);
-//
-//            Team teams = new Team(teamNames, playerNamesArray);     // Vi instantierer her fra Team class.
-//            //addTeam(teams);       // Sender teams input videre til Admin class.
-//        }
-//    }
 
-    private void displayList(ArrayList teamsArray, String teamDesc) {     // Metode der viser de tilføjede holdnavne.
-        System.out.print(teamDesc + ": ");
-        for (int i = 0; i < teamsArray.size() - 1; i++) {   // -1 for at stoppe ved den anden siste ','.
-            System.out.print(teamsArray.get(i) + ", ");
+    private Admin ad;
+
+    {
+        try {
+            ad = new Admin();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        System.out.println(teamsArray.get(teamsArray.size()-1));    // for at få det sidste element i arrayet.
     }
 
-    private int playerChoiceInt() {        // Exception metode
-        int choice = 0;
-        System.out.println("Er i flere spillere? Indtast '1' for ja eller '2' for nej.");  // Spørger her
+
+    private Player guest;
+
+    {
         try {
-            String inStr = sc.next();
-            int inInt = Integer.parseInt(inStr);
-            if (inInt < 1 || inInt > 2) {       // Hvis der bliver indtastet alt andet end 1 eller 2, så skal der throwes en exception
-                throw new InputMismatchException(); // Hvis inputtet/typen ikke passer til metoden. ('throw' bruges til at throw en specifik exception for en metode)
-                // "InputMismatchException" opstår når man tager input fra brugeren, som ikke matcher metoden.
-                // Fx hvis man læser en integer data med nextInt metoden, og værdien der bliver skrevet er af String, så sker der en fejl.
-            } else {
-                choice = inInt;     // Sætter choice til inInt, for at kunne køre videre hvis brugere skriver 1 eller 2.
-            }
-        } catch (InputMismatchException e) {     // Exception specifikt for scanneren, så prøv igen.
-            System.out.println(" *FORKERT TAL INPUT! Du kan kun skrive '1' eller '2'!* ");
-            playerChoiceInt();
-        } catch (NumberFormatException e) {     // Exception for overall, hvis brugeren skriver en string i stedet for et tal, så prøv igen.
-            // Kastes når man prøver at convert en string til et tal, heri fx int, float osv.
-            System.out.println(" *FORKERT INPUT, DET KAN IKKE VÆRE BOGSTAVER! Du kan kun skrive '1' eller '2'!* ");
-            playerChoiceInt();
+            guest = new Player();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        return choice;
+    }
+
+
+    public void inputFromUser() throws IOException {
+        System.out.print("Hej og velkommen til turnerings programmet.\n"+
+                "Først og fremmest ");
+        while (input) {     // Mens input er true - skal den blive ved med at køre.
+            System.out.println("vælg hvem du er / hvad du vil\n" +
+                    "1: Jeg vil tilføje mit hold til turneringen\n2: Jeg er admin (låst med password)\nQ: stop programmet");
+            //int userChoice = playerChoiceInt();
+            if(sc.hasNextInt()) {
+                String userInput = sc.next();
+                if (Integer.parseInt(userInput) == 1) {
+                    guest.readFromFile("teams.txt");
+                    guest.inputFromPlayers();
+                    input = false;
+                } else if (Integer.parseInt(userInput) == 2) {
+                    System.out.println("Indtast password:");
+                    if(sc.next().equalsIgnoreCase(passWord)) {
+                        ad.readFromFile("teams.txt");
+                        ad.inputFromAdmin();
+                        input = false;
+                    }
+                    else{
+                        System.out.println("Forkert password");
+                        continue;
+                    }
+                }
+                else{
+                    System.out.println("Dette er desværre ikke en af mulighederne, angiv tallet 1 eller 2");
+                    System.out.println();
+                    continue;
+                }
+            }
+            else{
+                String userInput = sc.next();
+                if(userInput.equalsIgnoreCase("q")){
+                    break;
+                }
+                else {
+                    System.out.println("Ikke et validt svar, angiv et tal mellem 1 og 5 eller q.");
+                    System.out.println();
+                    continue;
+                }
+            }
+        }
     }
 }
