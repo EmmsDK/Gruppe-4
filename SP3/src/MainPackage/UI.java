@@ -9,8 +9,6 @@ import java.util.Scanner;
 
 public abstract class UI {
     private ArrayList<Team> teamList = new ArrayList<>();
-    //private ArrayList<String> testString;
-    //private ArrayList<Team> teams;
     private String deadline; // Make it a Date (class) or make a Dates class to pass it to
     private ArrayList<String> dates; // Likewise as above
     /* Is written on the first line of the .txt file and is used to be able to read at which line
@@ -82,24 +80,6 @@ public abstract class UI {
         }
     }
 
-    // For admin and user (But overwritten in Player)
-//    public void writeDateToFile(String file) throws IOException {
-//        writeTeamToFile(file);
-//        try (FileWriter writer = new FileWriter(file)) {
-//            if(getDeadline().isBlank()) {
-//                writer.write("01/01/2021");
-//            }
-//            else{
-//                writer.write(getDeadline() + "\n");
-//            }
-//            if(getDates().size() < 1) {
-//                for (String s : getDates()) {
-//                    writer.write(s + "\n");
-//                }
-//            }
-//        }
-//    }
-
     public void setTeamsList(ArrayList<Team> _teams) {
         this.teamList = _teams;
     }
@@ -151,29 +131,6 @@ public abstract class UI {
         }
         setDatesFirst(_dates);
     }
-
-    // Adding and removing a team
-//    public void addTeam(Team _teams) throws IOException {
-//        this.teams.add(_teams);
-//        writeToFile("teams.txt");
-//    }
-
-//    // Also add, so their play times (dates) are removed
-//    public void removeTeam(String teamName) throws IOException { // Maybe change int to something else, teamName perhaps?
-//        if(this.getTeamList().stream().anyMatch(element -> element.getTeamName().equals(teamName))){
-//            this.getTeamList().removeIf(element -> (element.getTeamName().equalsIgnoreCase(teamName)));
-//        }
-//        else{
-//            System.out.println("No team with this name");
-//            // Call the scanner again here
-//        }
-//        //this.teams.remove(_teamPlacement);
-//        for(int i = 0; i < getTeamList().size(); i++) {
-//            System.out.println(getTeamList().get(i));
-//        }
-//        //this.teams.remove(_teamPlacement);
-//        writeTeamToFile("teams.txt");
-//    }
 
     /* Below are all the functions for making smaller changes to the individual teams, such as Team name, Team member,
        whether they have lost and upcoming is each teams points and wins (amount) */
