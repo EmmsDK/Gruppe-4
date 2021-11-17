@@ -58,27 +58,6 @@ public abstract class UI {
     // For admin and user
     public ArrayList<Team> getTeamList() {return teamList;}
 
-    // For admin and user (But overwritten in Player)
-    public void writeToFile(String file) throws IOException {
-        try (FileWriter writer = new FileWriter(file)) {
-            // Changed to abstract
-            writer.write(teamList.size()+"\n");
-            for (Team t : teamList){
-                writer.write(t.toString()+"\n");
-            }
-            if(getDeadline() == null || getDeadline().isBlank()) {
-                writer.write("01/01/2021");
-            }
-            else{
-                writer.write(getDeadline() + "\n");
-            }
-            if(getDates().size() < 1) {
-                for (String s : getDates()) {
-                    writer.write(s + "\n");
-                }
-            }
-        }
-    }
 
     public void setTeamsList(ArrayList<Team> _teams) {
         this.teamList = _teams;
@@ -95,42 +74,6 @@ public abstract class UI {
         writeToFile("teams.txt");
     }
 
-    // Maybe also have in UI
-    void readFromFile(String file) throws FileNotFoundException {
-        Scanner fileReader = new Scanner(new File(file));
-        ArrayList<Team> tmpList = new ArrayList<>();
-        ArrayList<String[]> txtList = new ArrayList<>();
-        while (fileReader.hasNextLine()){
-            String line = fileReader.nextLine();
-            String[] element = line.split(" ");
-            txtList.add(element);
-        }
-        teamAmount = Integer.parseInt(txtList.get(0)[0]); // Muligvis tilføjes noget
-        for(int i = 1; i <= teamAmount; i++) {
-            String[] element = txtList.get(i);
-            ArrayList<String> playerNames = new ArrayList<>();
-            for(int f = 1; f < element.length-1; f++){
-                playerNames.add(element[f]);
-            }
-            Team team = new Team(element[0], playerNames);
-            team.setHaveLost(Boolean.parseBoolean(element[element.length-1]));
-            tmpList.add(team);
-        }
-        setTeamsList(tmpList);
-        if(teamAmount+1 < txtList.size()) {
-            setDeadlineFirst(txtList.get(teamAmount + 1)[0]);
-        }
-        ArrayList<String> _dates = new ArrayList<>();
-        for(int i = teamAmount+2; i <txtList.size(); i++) {
-            String _date = "";
-            for(int f = 0; f < txtList.get(i).length; f++){
-                _date += txtList.get(i)[f] + " ";
-            }
-            _dates.add(_date);
-            // Add more, if team names also is included on the line
-        }
-        setDatesFirst(_dates);
-    }
 
     /* Below are all the functions for making smaller changes to the individual teams, such as Team name, Team member,
        whether they have lost and upcoming is each teams points and wins (amount) */
