@@ -4,7 +4,7 @@ class Main {
 
 }
 
-Main *-- UI
+Main -- UI
 
 class UI{
     - ArrayList<Team> teamList;
@@ -27,9 +27,9 @@ class UI{
     + void changeTeam(); Overload
 }
 
-UI *-- Player
-UI *-- Team
-UI *-- Admin
+UI <|-- Player
+UI -- Team
+UI <|-- Admin
 
 class Player{
     - ArrayList<String> playerNamesArray;
@@ -57,14 +57,12 @@ class Admin{
     - Scanner sc;
     - void removeTeam(String teamName);
 
-
 }
 
 
 class Knockout{
     - int bracketSize;
     - ArrayList<ArrayList<Team>> brackets;
-
 
 }
 
@@ -88,14 +86,14 @@ class Interface {
     - Scanner start;
 }
 
-Team <-- Player : 2..16
-Main <-- Interface : ..*
-Admin <-- Knockout
-Admin <-- GroupStage
-Admin <-- Team
+Team -- Player : 2..16
+Main -- Interface : ..*
+Admin -- Knockout
+Admin -- GroupStage
+Admin -- Team
 
-Tournament *-- Knockout
-Tournament *-- GroupStage
+Tournament <|-- Knockout
+Tournament <|-- GroupStage
 
 
 @enduml
