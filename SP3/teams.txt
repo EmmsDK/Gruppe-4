@@ -1,9 +1,18 @@
-7
-AHoldet Egern Gris false
-Hjort Ian Poul Janne false
-TroelsEngle Kukkeli ku false
-Ænder Rip Rap Rup false
-IldNationen Kora Trine false
-Polly Tulle Kaj false
-TradiDanskere Holger Jens false
-09/12/2021
+16
+AmericanFalcons  Patricia Barbara false
+NewYorkKamikazePilots  Jens Simon false
+RedRacers Lucas Mads false
+SecretAgents  Alison Ester false
+AsianPredators  Kasper Helle false
+TheAvengers  Tanja Julius false
+SilverHawks  Emil Emma false
+KnockoutStingers  Chris Oscar false
+BadHeroes  Daniel Jeppe false
+GermanGangsters  Micki Oliver false
+CopenhagenBlasters  Ida Emilie false
+YellowLegends  Christina Anna false
+DodgingDivas  Kristine Katrine false
+TheAssaultedNuts  Anton David false
+TheCanadianSlayers  Rosa Torben false
+Scrooge'sLittleHelpers  Alexander Elise false
+12/12/2021
