@@ -59,13 +59,13 @@ public class DBConnector implements IO {
         return team_data;
     }
 
-    public void saveGameData(ArrayList<Team> teamList) {
+    public void writeData(ArrayList<Team> teamList) {
         Connection conn = null;
         String sql = "INSERT INTO Hold(hold, player1, player2, result) "
                 + "VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE hold=?, result=?";
         try {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            PreparedStatement pstmt = conn.prepareStatement((sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             for(int i = 0; i < teamList.size(); i++) {
 
