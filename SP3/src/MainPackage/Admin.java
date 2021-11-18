@@ -1,10 +1,5 @@
 package MainPackage;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.DateFormat;
 import java.util.Scanner;
 import java.lang.*;
 import java.util.*;
@@ -46,44 +41,6 @@ public class Admin extends UI{
     public ArrayList<String> getDates() {
         return dates;
     }
-
-    //    public Admin(ArrayList<Team> teamList, String deadline, ArrayList<String> dates) {
-//        setTeamList(teamList);
-//        setDeadline(deadline);
-//        setDates(dates);
-//    }
-//    public Admin() throws FileNotFoundException {
-//    }
-
-//    // Only for admin
-//    public void setDeadlineFirst(String deadline) {
-//        this.deadline = deadline;
-//    }
-
-//    // Only for admin
-//    public void changeDeadline(String deadline) throws IOException {
-//        this.deadline = deadline;
-//        writeToFile("teams.txt");
-//    }
-//
-//    // Only for admin / system (program) perhaps
-//    public void addDates(String date) throws IOException {
-//        this.dates.add(date);
-//        writeToFile("teams.txt");
-//    }
-//
-//    // Only for admin
-//    public void removeDates(String date) throws IOException {
-//        // Make exception caught, for when using scanner - so that if it's not a valid date/team, it responds
-//        this.dates.removeIf(element -> (element.equalsIgnoreCase(date)));
-//        writeToFile("teams.txt");
-//    }
-//
-//    // This function is called, if a smaller change is made to one of the already existing teams in the list
-//    public void changeTeamsList(ArrayList<Team> _teams) throws IOException {
-//        this.teamList = _teams;
-//        writeToFile("teams.txt");
-//    }
 
     /* Below are all the functions for making smaller changes to the individual teams, such as Team name, Team member,
    whether they have lost and upcoming is each teams points and wins (amount) */
@@ -167,9 +124,7 @@ public class Admin extends UI{
                     // Function that sets the losing teams hasLost to true - needs to be expanded with exceptions and user input
                     inputWon();
                     continue;
-//                    Team testTeam = (Team) knockoutTournaments.get(0).getTournament().get(3).get(1);
-//                    boolean testBool = testTeam.getHaveLost();
-//                    System.out.println(testBool);
+
                 }
                 else if(Integer.parseInt(userInput) == 7){
                     if(knockoutTournaments.size() > 0){
@@ -386,9 +341,7 @@ public class Admin extends UI{
                 Team team1 = (Team) a.get(0); // Make exceptions for if it not a Team object
                 Team team2 = (Team) a.get(1); // -||-
                 //String date = "Ingen nuværende dato";
-//                if(a.size() > 2){ // Make sure it's updated for groupStage, currently only works for knockout
-//                    date = (String) a.get(2);
-//                }
+
                 System.out.print("Kamp "+kamp+": "+team1.getTeamName()+" vs. "+team2.getTeamName()+" | "+
                         knockoutTournaments.get(0).someting(((Team) a.get(0)).getHaveLost(), ((Team) a.get(1)).getHaveLost())); //Midlertidigt
                 System.out.println();

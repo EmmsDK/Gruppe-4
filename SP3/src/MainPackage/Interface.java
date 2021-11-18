@@ -1,9 +1,7 @@
 package MainPackage;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Interface {
@@ -12,13 +10,11 @@ public class Interface {
     private String deadline;
     private ArrayList<String> dates;
     private String user = "";
-    //private boolean hasLost;
 
     public Interface(ArrayList<Team> teamList, String deadline, ArrayList<String> dates) {
         this.teamList = teamList;
         this.deadline = deadline;
         this.dates = dates;
-        //this.hasLost = hasLost;
     }
 
     public String getUser() {

@@ -12,7 +12,4 @@ public interface IO {
     String readDeadlineData();
     void writeDeadlineData(String teamList);
 
-//    ArrayList<Team> teamList = new ArrayList<>();
-//    String deadline = "";
-//    ArrayList<String> dates = new ArrayList<>();
 }

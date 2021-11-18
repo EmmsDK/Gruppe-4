@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ReadFile implements IO {
-    //private ArrayList<String[]> txtList;
-
     /* step 2) reads only teams from the txtList, so first line is the amount of teams (a int) and the next
     x (amount of teams) lines, is the teams which has to be instantiated as a Team object */
     public ArrayList<Team> readTeamData(){

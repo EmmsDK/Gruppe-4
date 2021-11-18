@@ -1,11 +1,5 @@
 package MainPackage;
 
-import MainPackage.Admin;
-import MainPackage.Team;
-
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -119,5 +113,4 @@ public class Player extends UI{
     }
 }
 
-// Ingen space mellem input fx Team Fire = TeamFire.
 

@@ -13,9 +13,7 @@ public class Team {
     public Team(String _teamName, ArrayList<String> teamPlayers) {
         this.teamName = _teamName;
         this.teamPlayers = teamPlayers;
-       // this.haveLost = _haveLost;
-       // this.gameWon = _gameWon;
-      // this.teamPoints = _teamPoints;
+
     }
 
     public String getTeamName() {
@@ -30,14 +28,6 @@ public class Team {
         return teamPlayers;
     }
 
-    public int getGameWon() {
-        return gameWon;
-    }
-
-    public int getTeamPoints() {
-        return teamPoints;
-    }
-
     public void setTeamName(String teamName) {
         this.teamName = teamName;
     }
@@ -48,14 +38,6 @@ public class Team {
 
     public void setTeamPlayers(ArrayList<String> teamPlayers) {
         this.teamPlayers = teamPlayers;
-    }
-
-    public void setGameWon(int gameWon) {
-        this.gameWon = gameWon;
-    }
-
-    public void setTeamPoints(int teamPoints) {
-        this.teamPoints = teamPoints;
     }
 
         @Override

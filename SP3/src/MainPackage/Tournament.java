@@ -3,8 +3,6 @@ package MainPackage;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static java.util.Collections.shuffle;
-
 public class Tournament {
     private ArrayList<ArrayList> tournament = new ArrayList<>();
     private ArrayList<Team> match = new ArrayList<>();
@@ -47,17 +45,7 @@ public class Tournament {
             newBracket.add(innerMatch);
         }
         System.out.println(newBracket);
-//        for(int i = 0; i < _tournament.size(); i++){
-//            //System.out.println("I: "+i);
-//            ArrayList<Team> oldInnerMatch = _tournament.get(i);
-//            ArrayList<Team> newInnerMatch = new ArrayList<>();
-//            for(int f = 0; f < _tournament.size() / bracketSize; f++){
-//                //System.out.println((i*(bracketSize/2)*round)+f);
-//                if(_tournament.get(i*bracketSize+f).get(f).getHaveLost() == false){
-//                    System.out.println(i*bracketSize+f);
-//                }
-//            }
-//        }
+
         return newBracket;
     }
 }
