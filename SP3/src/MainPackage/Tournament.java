@@ -29,7 +29,7 @@ public class Tournament {
         return _tournament;
     }
 
-    public ArrayList<ArrayList> nextBracket(ArrayList<ArrayList> _tournament, int bracketSize, int round){
+    public ArrayList<ArrayList> nextBracket(ArrayList<ArrayList> _tournament, int bracketSize){
         ArrayList<ArrayList> newBracket = new ArrayList<>();
         ArrayList<Team> winningTeams = new ArrayList<>();
         for(ArrayList<Team> a : _tournament){

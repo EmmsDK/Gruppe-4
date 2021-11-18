@@ -7,33 +7,33 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Interface {
+
+    private ArrayList<Team> teamList;
+    private String deadline;
+    private ArrayList<String> dates;
+    private String user = "";
+    //private boolean hasLost;
+
+    public Interface(ArrayList<Team> teamList, String deadline, ArrayList<String> dates) {
+        this.teamList = teamList;
+        this.deadline = deadline;
+        this.dates = dates;
+        //this.hasLost = hasLost;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
     boolean input = true;
     String passWord = "1234";
     Scanner sc = new Scanner(System.in);
 
-    private Admin ad;
+    private UI ad;
 
-    {
-        try {
-            ad = new Admin();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+    private UI guest;
 
-
-    private Player guest;
-
-    {
-        try {
-            guest = new Player();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public void inputFromUser() throws IOException {
+    public void firstInteraktion() throws IOException {
         System.out.print("Hej og velkommen til turnerings programmet.\n"+
                 "Først og fremmest ");
         while (input) {     // Mens input er true - skal den blive ved med at køre.
@@ -41,16 +41,26 @@ public class Interface {
                     "1: Jeg vil tilføje mit hold til turneringen\n2: Jeg er admin (låst med password)\nQ: stop programmet");
             //int userChoice = playerChoiceInt();
             if(sc.hasNextInt()) {
-                String userInput = sc.next();
-                if (Integer.parseInt(userInput) == 1) {
-                    guest.readFromFile("teams.txt");
-                    guest.inputFromPlayers();
+                int userInput = sc.nextInt();
+                if (userInput == 1) {
+                    //guest.readFromFile("teams.txt");
+                    guest = new Player();
+                    guest.setTeamList(this.teamList);
+                    guest.setDates(this.dates);
+                    guest.setDeadline(this.deadline);
+                    user = "player";
+                    guest.inputFromUser();
                     input = false;
-                } else if (Integer.parseInt(userInput) == 2) {
+                } else if (userInput == 2) {
                     System.out.println("Indtast password:");
                     if(sc.next().equalsIgnoreCase(passWord)) {
-                        ad.readFromFile("teams.txt");
-                        ad.inputFromAdmin();
+                        //ad.readFromFile("teams.txt");
+                        ad = new Admin();
+                        ad.setTeamList(this.teamList);
+                        ad.setDates(this.dates);
+                        ad.setDeadline(this.deadline);
+                        user = "admin";
+                        ad.inputFromUser();
                         input = false;
                     }
                     else{

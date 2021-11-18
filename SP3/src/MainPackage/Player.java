@@ -16,11 +16,53 @@ public class Player extends UI{
     boolean input = true;
     Scanner sc = new Scanner(System.in);
 
-    public Player() throws FileNotFoundException {      // Hvis der ikke er en fil, så skal der kastes en exception.
+    ArrayList<Team> teamList = new ArrayList<>();
+    String deadline;
+    ArrayList<String> dates = new ArrayList<>();
 
+    @Override
+    public void setTeamList(ArrayList<Team> teamList) {
+        this.teamList = teamList;
     }
 
-    public void inputFromPlayers() throws IOException {
+    @Override
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
+    }
+
+    @Override
+    public void setDates(ArrayList<String> dates) {
+        this.dates = dates;
+    }
+
+    @Override
+    public ArrayList<Team> getTeamList() {
+        return teamList;
+    }
+
+    @Override
+    public String getDeadline() {
+        return deadline;
+    }
+
+    @Override
+    public ArrayList<String> getDates() {
+        return dates;
+    }
+
+//    public Player(ArrayList<Team> teamList, String deadline, ArrayList<String> dates) {
+//        setTeamList(teamList);
+//        System.out.println(getTeamList());
+//        setDeadline(deadline);
+//        System.out.println(getDeadline());
+//        setDates(dates);
+//        System.out.println(getDates());
+//    }
+
+//    public Player() throws FileNotFoundException {      // Hvis der ikke er en fil, så skal der kastes en exception.
+//
+//    }
+    public void inputFromUser() {
         System.out.println(" *VELKOMMEN TIL ÅRETS SKOLE BORDFODBOLDTURNERING!* ");
 
         while (input) {     // Mens input er true - skal den blive ved med at køre.
@@ -30,7 +72,7 @@ public class Player extends UI{
             playerNamesArray.add(sc.next());
 
             int userChoice = playerChoiceInt();
-            if (userChoice == 1) {
+            if (userChoice == 1) { // Med kun mulighed for at have 2 spillere, er denne del redundant
                 System.out.println("Indtast næste spillers navn:");
                 playerNamesArray.add(sc.next());
 
@@ -43,8 +85,17 @@ public class Player extends UI{
 
             Team teams = new Team(teamNames, playerNamesArray);     // Vi instantierer her fra Team class.
             addTeam(teams);       // Sender teams input videre til Admin class.
-
         }
+        Main.finalList = teamList;
+        Main.finalDeadline = deadline;
+        Main.finalDates = dates;
+    }
+
+    // only for user
+    public void addTeam(Team _teams){
+        ArrayList<Team> newList = getTeamList();
+        newList.add(_teams);
+        setTeamList(newList);
     }
 
     private void displayList(ArrayList teamsArray, String teamDesc) {     // Metode der viser de tilføjede holdnavne.

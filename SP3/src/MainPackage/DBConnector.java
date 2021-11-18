@@ -7,8 +7,9 @@ public class DBConnector implements IO {
     static final String USER = "root";
     static final String PASS = "password";
 
-    public String[] readTeamData() {
-        String[] team_data = new String[16];
+    public ArrayList<Team> readTeamData() { // Skal returnere en ArrayList<Team>
+        //String[] team_data = new String[16];
+        ArrayList<Team> teamList = new ArrayList<>();
         Connection conn = null;
         Statement stmt = null;
         int count = 0;
@@ -24,13 +25,18 @@ public class DBConnector implements IO {
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
+                ArrayList<String> members = new ArrayList<>();
                 String hold = rs.getString("hold");
-                String player1 = rs.getString("player1");
-                String player2 = rs.getString("player2");
+                members.add(rs.getString("player1"));
+                members.add(rs.getString("player2"));
                 boolean result = rs.getBoolean("result");
 
-                team_data[count] = hold + "," + player1 + "," + player2 + "," + result;
-                count++;
+                Team team = new Team(hold, members);
+                team.setHaveLost(result);
+                teamList.add(team);
+
+//                team_data[count] = hold + "," + player1 + "," + player2 + "," + result;
+//                count++;
             }
 
             rs.close();
@@ -56,10 +62,11 @@ public class DBConnector implements IO {
                 se3.printStackTrace();
             }   // afslutter finally try.
         }       // afslutter selve try.
-        return team_data;
+        //return team_data;
+        return teamList;
     }
 
-    public void writeData(ArrayList<Team> teamList) {
+    public void writeTeamData(ArrayList<Team> teamList) {
         Connection conn = null;
         String sql = "INSERT INTO Hold(hold, player1, player2, result) "
                 + "VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE hold=?, result=?";
@@ -67,7 +74,7 @@ public class DBConnector implements IO {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            for(int i = 0; i < teamList.size(); i++) {
+            for (int i = 0; i < teamList.size(); i++) {
 
                 Team t = teamList.get(i);
                 String player1 = t.getTeamPlayers().get(0);
@@ -85,6 +92,21 @@ public class DBConnector implements IO {
         } catch (SQLException se) {
             se.printStackTrace();
         }
+
+    }
+    public ArrayList<String> readDatesData(){
+        ArrayList<String> _dates = new ArrayList<>();
+        return _dates;
+    }
+
+    public void writeDatesData(ArrayList<String> _dates){}
+
+    public String readDeadlineData(){
+        String _deadline = new String();
+        return _deadline;
+    }
+
+    public void writeDeadlineData(String _deadline){}
 }
 
 
@@ -115,5 +137,3 @@ public class DBConnector implements IO {
 
 
 
-
-}

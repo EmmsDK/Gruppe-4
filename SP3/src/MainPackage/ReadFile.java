@@ -7,29 +7,40 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ReadFile {
-    private ArrayList<String[]> txtList;
+public class ReadFile implements IO {
+    //private ArrayList<String[]> txtList;
 
-    // step 1) Read every line of the txt file
-    private void readLines() throws FileNotFoundException {
-        Scanner fileReader = new Scanner(new File("teams.txt"));
+//    // step 1) Read every line of the txt file
+//    private void readLines() throws FileNotFoundException {
+//        Scanner fileReader = new Scanner(new File("teams.txt"));
+//        ArrayList<String[]> txtList = new ArrayList<>();
+//        while (fileReader.hasNextLine()){
+//            String line = fileReader.nextLine();
+//            String[] element = line.split(" ");
+//            txtList.add(element);
+//        }
+//        this.txtList = txtList;
+//    }
+
+    /* step 2) reads only teams from the txtList, so first line is the amount of teams (a int) and the next
+    x (amount of teams) lines, is the teams which has to be instantiated as a Team object */
+    public ArrayList<Team> readTeamData(){
+        Scanner fileReader = null;
+        try {
+            fileReader = new Scanner(new File("teams.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         ArrayList<String[]> txtList = new ArrayList<>();
         while (fileReader.hasNextLine()){
             String line = fileReader.nextLine();
             String[] element = line.split(" ");
             txtList.add(element);
         }
-        this.txtList = txtList;
-    }
-
-    /* step 2) reads only teams from the txtList, so first line is the amount of teams (a int) and the next
-    x (amount of teams) lines, is the teams which has to be instantiated as a Team object */
-    ArrayList<Team> readTeams(){
-        int teamAmount;
+        //int teamAmount;
         ArrayList<Team> tmpList = new ArrayList<>();
-        teamAmount = Integer.parseInt(this.txtList.get(0)[0]); // Muligvis tilføjes noget
-        this.txtList.remove(0);
-        for(int i = 1; i <= teamAmount; i++) {
+        int counter = txtList.size();
+        for(int i = 0; i < counter; i++) {
             String[] element = txtList.get(0);
             ArrayList<String> playerNames = new ArrayList<>();
             for(int f = 1; f < element.length-1; f++){
@@ -38,27 +49,58 @@ public class ReadFile {
             Team team = new Team(element[0], playerNames);
             team.setHaveLost(Boolean.parseBoolean(element[element.length-1]));
             tmpList.add(team);
-            this.txtList.remove(0);
+            txtList.remove(0);
         }
         return tmpList;
     }
 
-    // step 3) reads the deadline from the txtList
-    public String readDeadline(){
-        String _deadline = this.txtList.get(0)[0];
-        this.txtList.remove(0);
-        return _deadline;
+//        // step 1) Read every line of the txt file
+//    private void readLinesDates() throws FileNotFoundException {
+//        Scanner fileReader = new Scanner(new File("teams.txt"));
+//        ArrayList<String[]> txtList = new ArrayList<>();
+//        while (fileReader.hasNextLine()){
+//            String line = fileReader.nextLine();
+//            String[] element = line.split(" ");
+//            txtList.add(element);
+//        }
+//        this.txtList = txtList;
+//    }
+    // reads the deadline from the deadline.txt file
+    public String readDeadlineData(){
+        Scanner fileReader = null;
+        try {
+            fileReader = new Scanner(new File("deadline.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        String deadline = "";
+        if(fileReader.hasNextLine()) {
+            deadline = fileReader.nextLine();
+        }
+        return deadline;
     }
 
     // step 4) reads all the match dates from the txtList, which is just the last entries of the list
-    public ArrayList<String> readMatchDates(){
+    public ArrayList<String> readDatesData(){
+        Scanner fileReader = null;
+        try {
+            fileReader = new Scanner(new File("dates.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        ArrayList<String[]> txtList = new ArrayList<>();
+        while (fileReader.hasNextLine()){
+            String line = fileReader.nextLine();
+            String[] element = line.split(" ");
+            txtList.add(element);
+        }
         ArrayList<String> _dates = new ArrayList<>();
-        int listSize = this.txtList.size();
+        int listSize = txtList.size();
         for(int i = 0; i < listSize; i++) {
             String _date = "";
-            for(int f = 0; f < this.txtList.get(0).length; f++){
-                _date += this.txtList.get(0)[f] + " ";
-                this.txtList.remove(0);
+            for(int f = 0; f < txtList.get(0).length; f++){
+                _date += txtList.get(0)[f] + " ";
+                txtList.remove(0);
             }
             _dates.add(_date);
             // Add more, if team names also is included on the line
@@ -67,24 +109,36 @@ public class ReadFile {
     }
 
     // For admin and user (But overwritten in Player)
-    public void writeToFile(ArrayList<Team> teamList, String deadline, ArrayList<String> dates) throws IOException {
+    public void writeTeamData(ArrayList<Team> teamList){
         try (FileWriter writer = new FileWriter("teams.txt")) {
-            // Changed to abstract
-            writer.write(teamList.size()+"\n");
             for (Team t : teamList){
                 writer.write(t.toString()+"\n");
             }
-            if(deadline == null || deadline.isBlank()) {
-                writer.write("01/01/2021");
-            }
-            else{
-                writer.write(deadline + "\n");
-            }
-            if(dates.size() < 1) {
-                for (String s : dates) {
-                    writer.write(s + "\n");
-                }
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+
+    public void writeDatesData(ArrayList<String> dates){
+        try (FileWriter writer = new FileWriter("dates.txt")) {
+            for (String s : dates) {
+                writer.write(s + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeDeadlineData(String deadline){
+        try (FileWriter writer = new FileWriter("deadline.txt")) {
+            if (deadline == null || deadline.isBlank()) {
+                writer.write("01/01/2021");
+            } else {
+                writer.write(deadline);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
