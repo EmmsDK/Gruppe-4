@@ -21,12 +21,13 @@ public class Main {
         finalDates = new ArrayList<>();
 
         IO io;
+        io = new DBConnector();
 
-        if(datapath==Datasource.CSVFILE) {
+        /*if(datapath==Datasource.CSVFILE) {
             io = new ReadFile();
         }else {
             io = new DBConnector();
-        }
+        }*/
 
         menu = new Interface(io.readTeamData(), io.readDeadlineData(), io.readDatesData());
         menu.firstInteraktion();
@@ -35,4 +36,6 @@ public class Main {
         io.writeDeadlineData(finalDeadline);
         io.writeDatesData(finalDates);
     }
+
+
 }

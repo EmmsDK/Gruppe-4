@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class DBConnector implements IO {
     static final String DB_URL = "jdbc:mysql://localhost/HoldDatabase";
     static final String USER = "root";
-    static final String PASS = "password";
+    static final String PASS = "1qaz2wsx";
 
     public ArrayList<Team> readTeamData() {
         ArrayList<Team> teamList = new ArrayList<>();
@@ -26,8 +26,8 @@ public class DBConnector implements IO {
             while (rs.next()) {
                 ArrayList<String> members = new ArrayList<>();
                 String hold = rs.getString("hold");
-                members.add(rs.getString("player1"));
-                members.add(rs.getString("player2"));
+                members.add(rs.getString("spiller1"));
+                members.add(rs.getString("spiller2"));
                 boolean result = rs.getBoolean("result");
 
                 Team team = new Team(hold, members);
@@ -64,7 +64,7 @@ public class DBConnector implements IO {
 
     public void writeTeamData(ArrayList<Team> teamList) {
         Connection conn = null;
-        String sql = "INSERT INTO Hold(hold, player1, player2, result) "
+        String sql = "INSERT INTO Hold(hold, spiller1, spiller2, result) "
                 + "VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE hold=?, result=?";
         try {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -73,12 +73,12 @@ public class DBConnector implements IO {
             for (int i = 0; i < teamList.size(); i++) {
 
                 Team t = teamList.get(i);
-                String player1 = t.getTeamPlayers().get(0);
-                String player2 = t.getTeamPlayers().get(1);
+                String spiller1 = t.getTeamPlayers().get(0);
+                String spiller2 = t.getTeamPlayers().get(1);
 
                 pstmt.setString(1, t.getTeamName());
-                pstmt.setString(2, player1);
-                pstmt.setString(3, player2);
+                pstmt.setString(2, spiller1);
+                pstmt.setString(3, spiller2);
                 pstmt.setBoolean(4, t.getHaveLost());
 
                 pstmt.addBatch();
@@ -147,6 +147,7 @@ public class DBConnector implements IO {
 
             for (int i = 0; i < _dates.size(); i++) {
                 String date = _dates.get(i);
+                pstmt.setString(1,_dates.get(i));
                 pstmt.addBatch();
             }
             pstmt.executeBatch();
@@ -171,12 +172,14 @@ public class DBConnector implements IO {
 
             String sql = "SELECT * FROM Deadline";
             ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
 
-            _deadline = rs.getString("deadline");
-
+                _deadline = rs.getString("deadline");
+            }
             rs.close();
             stmt.close();
             conn.close();
+
 
         } catch (SQLException se) {
             // Behandler errors for JDBC.
@@ -207,10 +210,11 @@ public class DBConnector implements IO {
         try {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
-            String deadline = _deadline;
-            pstmt.addBatch();
-
+            for(int i =0 ; i<10; i++ ) {
+                pstmt.setString(1, _deadline);
+                String deadline = _deadline;
+                pstmt.addBatch();
+            }
             pstmt.executeBatch();
         } catch (SQLException se) {
             se.printStackTrace();
