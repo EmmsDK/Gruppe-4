@@ -92,17 +92,130 @@ public class DBConnector implements IO {
     }
     public ArrayList<String> readDatesData(){
         ArrayList<String> _dates = new ArrayList<>();
+        Connection conn = null;
+        Statement stmt = null;
+        int count = 0;
+
+        try {
+            System.out.println("***Forbinder til database***");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            System.out.println("**Opretter queries**");
+            stmt = conn.createStatement();
+
+            String sql = "SELECT * FROM Date";
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                String _date = rs.getString("date");
+                _dates.add(_date);
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+
+        } catch (SQLException se) {
+            // Behandler errors for JDBC.
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Brugt til at close alle resources.
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se3) {
+                se3.printStackTrace();
+            }   // afslutter finally try.
+        }       // afslutter selve try.
         return _dates;
     }
 
-    public void writeDatesData(ArrayList<String> _dates){}
+    public void writeDatesData(ArrayList<String> _dates){
+        Connection conn = null;
+        String sql = "INSERT INTO Date(date) "
+                + "VALUES (?) ON DUPLICATE KEY UPDATE date=?";
+        try {
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            for (int i = 0; i < _dates.size(); i++) {
+                String date = _dates.get(i);
+                pstmt.addBatch();
+            }
+            pstmt.executeBatch();
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+    }
 
     public String readDeadlineData(){
         String _deadline = new String();
+        ArrayList<Team> teamList = new ArrayList<>();
+        Connection conn = null;
+        Statement stmt = null;
+        int count = 0;
+
+        try {
+            System.out.println("***Forbinder til database***");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            System.out.println("**Opretter queries**");
+            stmt = conn.createStatement();
+
+            String sql = "SELECT * FROM Deadline";
+            ResultSet rs = stmt.executeQuery(sql);
+
+            _deadline = rs.getString("deadline");
+
+            rs.close();
+            stmt.close();
+            conn.close();
+
+        } catch (SQLException se) {
+            // Behandler errors for JDBC.
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Brugt til at close alle resources.
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            }
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se3) {
+                se3.printStackTrace();
+            }   // afslutter finally try.
+        }       // afslutter selve try.
         return _deadline;
     }
 
-    public void writeDeadlineData(String _deadline){}
+    public void writeDeadlineData(String _deadline){
+        Connection conn = null;
+        String sql = "INSERT INTO Deadline(deadline) "
+                + "VALUES (?) ON DUPLICATE KEY UPDATE deadline=?";
+        try {
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            String deadline = _deadline;
+            pstmt.addBatch();
+
+            pstmt.executeBatch();
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+    }
 }
 
 
