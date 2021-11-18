@@ -1,4 +1,4 @@
 package MainPackage;
 
-public class GroupStage {
+public class GroupStage extends Tournament {
 }

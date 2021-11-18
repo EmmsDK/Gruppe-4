@@ -46,7 +46,6 @@ public class Knockout extends Tournament{
         this.tournament.set(_match-1, tmpMatch);
         for(ArrayList<Team> a : this.tournament){
             //Make sure, if there is only 1 team in the list, it dosen't bug
-
             System.out.print(a.get(0).getTeamName()+" vs. "+a.get(1).getTeamName()+ " | "
                     +someting(a.get(0).getHaveLost(), a.get(1).getHaveLost()));
             System.out.println();

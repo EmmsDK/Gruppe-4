@@ -7,8 +7,7 @@ public class DBConnector implements IO {
     static final String USER = "root";
     static final String PASS = "password";
 
-    public ArrayList<Team> readTeamData() { // Skal returnere en ArrayList<Team>
-        //String[] team_data = new String[16];
+    public ArrayList<Team> readTeamData() {
         ArrayList<Team> teamList = new ArrayList<>();
         Connection conn = null;
         Statement stmt = null;
@@ -60,7 +59,6 @@ public class DBConnector implements IO {
                 se3.printStackTrace();
             }   // afslutter finally try.
         }       // afslutter selve try.
-        //return team_data;
         return teamList;
     }
 

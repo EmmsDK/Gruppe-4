@@ -23,7 +23,6 @@ public class ReadFile implements IO {
             String[] element = line.split(" ");
             txtList.add(element);
         }
-        //int teamAmount;
         ArrayList<Team> tmpList = new ArrayList<>();
         int counter = txtList.size();
         for(int i = 0; i < counter; i++) {

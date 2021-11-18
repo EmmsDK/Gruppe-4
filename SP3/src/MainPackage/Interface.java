@@ -35,11 +35,9 @@ public class Interface {
         while (input) {     // Mens input er true - skal den blive ved med at køre.
             System.out.println("vælg hvem du er / hvad du vil\n" +
                     "1: Jeg vil tilføje mit hold til turneringen\n2: Jeg er admin (låst med password)\nQ: stop programmet");
-            //int userChoice = playerChoiceInt();
             if(sc.hasNextInt()) {
                 int userInput = sc.nextInt();
                 if (userInput == 1) {
-                    //guest.readFromFile("teams.txt");
                     guest = new Player();
                     guest.setTeamList(this.teamList);
                     guest.setDates(this.dates);
@@ -50,7 +48,6 @@ public class Interface {
                 } else if (userInput == 2) {
                     System.out.println("Indtast password:");
                     if(sc.next().equalsIgnoreCase(passWord)) {
-                        //ad.readFromFile("teams.txt");
                         ad = new Admin();
                         ad.setTeamList(this.teamList);
                         ad.setDates(this.dates);

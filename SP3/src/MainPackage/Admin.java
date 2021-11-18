@@ -70,7 +70,7 @@ public class Admin extends UI{
     }
 
     // Also add, so their play times (dates) are removed
-    public void removeTeam(String teamName) { // Maybe change int to something else, teamName perhaps?
+    public void removeTeam(String teamName) {
         ArrayList<Team> _teamList = getTeamList();
         if(_teamList.stream().anyMatch(element -> element.getTeamName().equals(teamName))){
             _teamList.removeIf(element -> (element.getTeamName().equalsIgnoreCase(teamName)));
@@ -79,12 +79,9 @@ public class Admin extends UI{
             System.out.println("No team with this name");
             // Call the scanner again here
         }
-        //this.teams.remove(_teamPlacement);
         for(int i = 0; i < _teamList.size(); i++) {
             System.out.println(getTeamList().get(i));
         }
-        //this.teams.remove(_teamPlacement);
-        //writeToFile("teams.txt");
         setTeamList(_teamList);
     }
 
@@ -102,7 +99,7 @@ public class Admin extends UI{
             if(sc.hasNextInt()) {
                 String userInput = sc.next();
                 if (Integer.parseInt(userInput) == 1) {
-                    inputDeadline(); // Doesn't save it in txt file
+                    inputDeadline();
                     System.out.println();
                     continue;
                 } else if (Integer.parseInt(userInput) == 2) {
@@ -121,7 +118,6 @@ public class Admin extends UI{
                     System.out.println();
                     continue;
                 } else if(Integer.parseInt(userInput) == 6){
-                    // Function that sets the losing teams hasLost to true - needs to be expanded with exceptions and user input
                     inputWon();
                     continue;
 
