@@ -29,9 +29,11 @@ public class Main {
 //            }
 //        };
         IO io;
+
         // Comment/uncomment to test the 2
         io = new ReadFile();
         //io = new DBConnector();
+
 //        if(datapath==Datasource.CSVFILE) {
 //            io = new ReadFile();
 //        }else {

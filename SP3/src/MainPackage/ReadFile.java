@@ -10,18 +10,6 @@ import java.util.Scanner;
 public class ReadFile implements IO {
     //private ArrayList<String[]> txtList;
 
-//    // step 1) Read every line of the txt file
-//    private void readLines() throws FileNotFoundException {
-//        Scanner fileReader = new Scanner(new File("teams.txt"));
-//        ArrayList<String[]> txtList = new ArrayList<>();
-//        while (fileReader.hasNextLine()){
-//            String line = fileReader.nextLine();
-//            String[] element = line.split(" ");
-//            txtList.add(element);
-//        }
-//        this.txtList = txtList;
-//    }
-
     /* step 2) reads only teams from the txtList, so first line is the amount of teams (a int) and the next
     x (amount of teams) lines, is the teams which has to be instantiated as a Team object */
     public ArrayList<Team> readTeamData(){
@@ -54,17 +42,6 @@ public class ReadFile implements IO {
         return tmpList;
     }
 
-//        // step 1) Read every line of the txt file
-//    private void readLinesDates() throws FileNotFoundException {
-//        Scanner fileReader = new Scanner(new File("teams.txt"));
-//        ArrayList<String[]> txtList = new ArrayList<>();
-//        while (fileReader.hasNextLine()){
-//            String line = fileReader.nextLine();
-//            String[] element = line.split(" ");
-//            txtList.add(element);
-//        }
-//        this.txtList = txtList;
-//    }
     // reads the deadline from the deadline.txt file
     public String readDeadlineData(){
         Scanner fileReader = null;

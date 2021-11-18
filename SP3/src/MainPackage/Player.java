@@ -50,18 +50,6 @@ public class Player extends UI{
         return dates;
     }
 
-//    public Player(ArrayList<Team> teamList, String deadline, ArrayList<String> dates) {
-//        setTeamList(teamList);
-//        System.out.println(getTeamList());
-//        setDeadline(deadline);
-//        System.out.println(getDeadline());
-//        setDates(dates);
-//        System.out.println(getDates());
-//    }
-
-//    public Player() throws FileNotFoundException {      // Hvis der ikke er en fil, så skal der kastes en exception.
-//
-//    }
     public void inputFromUser() {
         System.out.println(" *VELKOMMEN TIL ÅRETS SKOLE BORDFODBOLDTURNERING!* ");
 
